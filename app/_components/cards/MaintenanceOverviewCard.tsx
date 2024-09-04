@@ -1,0 +1,71 @@
+import { PieChart } from "@mui/x-charts/PieChart";
+
+export function MaintenanceOverviewCard(data: VehicleData | null) {
+  if (data != null) {
+    if (data.maintenance_data?.length > 0) {
+      const totalMaintenanceCost = data.maintenance_data.reduce((total, data) => {
+        return data.type === "Maintenance" ? total + Number(data.cost) : total;
+      }, 0);
+      const totalRepairCost = data.maintenance_data.reduce((total, data) => {
+        return data.type === "Repair" ? total + Number(data.cost) : total;
+      }, 0);
+      let totalServiceCost = totalMaintenanceCost + totalRepairCost;
+
+      return (
+        <div
+          className="overview-card maintenance-card"
+          id="maintenance-card"
+          style={{ gridRowEnd: totalServiceCost > 0 ? "span 14" : "span 5" }}
+        >
+          <b>Maintenance/repair Overview</b>
+          <p></p>
+          Total service cost: {totalServiceCost.toFixed(2)}
+          <br />
+          {totalServiceCost > 0 && (
+            <PieChart
+              series={[
+                {
+                  data: [
+                    {
+                      value: totalMaintenanceCost,
+                      color: "#6E7DAB",
+                      label: "Total\nmaintenance\ncost",
+                    },
+                    {
+                      value: totalRepairCost,
+                      color: "#82DDF0",
+                      label: "Total\nrepair\ncost",
+                    },
+                  ],
+                  highlightScope: { faded: "global", highlighted: "item" },
+                  faded: { innerRadius: 0, additionalRadius: 0, color: "gray" },
+                },
+              ]}
+              height={200}
+              margin={{
+                top: 20,
+                bottom: 20,
+              }}
+            />
+          )}
+        </div>
+      );
+    } else {
+      return (
+        <div className="overview-card maintenance-overview-card" style={{ gridRowEnd: "span 5" }}>
+          <b>Maintenance/repair Overview</b>
+          <p></p>
+          Add more data to get an overview.
+        </div>
+      );
+    }
+  } else {
+    return (
+      <div className="overview-card maintenance-overview-card" style={{ gridRowEnd: "span 5" }}>
+        <b>Maintenance/repair Overview</b>
+        <p></p>
+        Add a vehicle first.
+      </div>
+    );
+  }
+}
