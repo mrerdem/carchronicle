@@ -7,7 +7,7 @@ The application uses [**React**](https://react.dev/) for UI components and is bu
 
 The UI is designed as a combination of information cards which stacks in masonry layout.
 
-[**Visit**](https://carchronicleapp.vercel.app)
+[**Visit**](https://carchronicleweb.vercel.app)
 
 ## Screenshots
 
