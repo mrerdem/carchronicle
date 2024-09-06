@@ -75,7 +75,7 @@ export default function Tickets() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.ticket_data) {
-              const indexToUpdate = updatedVehicleData.ticket_data.findIndex((data) => data.row === data.row);
+              const indexToUpdate = updatedVehicleData.ticket_data.findIndex((ticket) => ticket.row === data.row);
               if (indexToUpdate != null) {
                 updatedVehicleData.ticket_data[indexToUpdate] = formData;
               }
@@ -98,7 +98,7 @@ export default function Tickets() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.ticket_data) {
-              const indexToDelete = updatedVehicleData.ticket_data.findIndex((data) => data.row === data.row);
+              const indexToDelete = updatedVehicleData.ticket_data.findIndex((ticket) => ticket.row === data.row);
               if (indexToDelete != null) {
                 updatedVehicleData.ticket_data.splice(indexToDelete, 1);
               }

@@ -71,7 +71,7 @@ export default function Maintenance() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.maintenance_data) {
-              const indexToUpdate = updatedVehicleData.maintenance_data.findIndex((data) => data.row === data.row);
+              const indexToUpdate = updatedVehicleData.maintenance_data.findIndex((maint) => maint.row === data.row);
               if (indexToUpdate != null) {
                 updatedVehicleData.maintenance_data[indexToUpdate] = formData;
               }
@@ -94,7 +94,7 @@ export default function Maintenance() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.maintenance_data) {
-              const indexToDelete = updatedVehicleData.maintenance_data.findIndex((data) => data.row === data.row);
+              const indexToDelete = updatedVehicleData.maintenance_data.findIndex((maint) => maint.row === data.row);
               if (indexToDelete != null) {
                 updatedVehicleData.maintenance_data.splice(indexToDelete, 1);
               }

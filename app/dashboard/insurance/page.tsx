@@ -71,7 +71,7 @@ export default function Insurance() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.insurance_data) {
-              const indexToUpdate = updatedVehicleData.insurance_data.findIndex((data) => data.row === data.row);
+              const indexToUpdate = updatedVehicleData.insurance_data.findIndex((insurance) => insurance.row === data.row);
               if (indexToUpdate != null) {
                 updatedVehicleData.insurance_data[indexToUpdate] = formData;
               }
@@ -94,7 +94,7 @@ export default function Insurance() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.insurance_data) {
-              const indexToDelete = updatedVehicleData.insurance_data.findIndex((data) => data.row === data.row);
+              const indexToDelete = updatedVehicleData.insurance_data.findIndex((insurance) => insurance.row === data.row);
               if (indexToDelete != null) {
                 updatedVehicleData.insurance_data.splice(indexToDelete, 1);
               }
