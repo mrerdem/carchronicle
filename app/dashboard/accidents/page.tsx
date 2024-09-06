@@ -75,7 +75,7 @@ export default function Accidents() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.accident_data) {
-              const indexToUpdate = updatedVehicleData.accident_data.findIndex((data) => data.row === data.row);
+              const indexToUpdate = updatedVehicleData.accident_data.findIndex((accident) => accident.row === data.row);
               if (indexToUpdate != null) {
                 updatedVehicleData.accident_data[indexToUpdate] = formData;
               }
@@ -98,7 +98,7 @@ export default function Accidents() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.accident_data) {
-              const indexToDelete = updatedVehicleData.accident_data.findIndex((data) => data.row === data.row);
+              const indexToDelete = updatedVehicleData.accident_data.findIndex((accident) => accident.row === data.row);
               if (indexToDelete != null) {
                 updatedVehicleData.accident_data.splice(indexToDelete, 1);
               }

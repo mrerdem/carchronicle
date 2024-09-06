@@ -79,7 +79,7 @@ export default function Consumption() {
               updatedVehicleData.avg_consumption = data.avgConsumption;
             }
             if (updatedVehicleData.refill_data) {
-              const indexToUpdate = updatedVehicleData.refill_data.findIndex((data) => data.row === data.row);
+              const indexToUpdate = updatedVehicleData.refill_data.findIndex((refill) => refill.row === data.row);
               if (indexToUpdate != null) {
                 updatedVehicleData.refill_data[indexToUpdate] = formData;
               }
@@ -105,7 +105,7 @@ export default function Consumption() {
               updatedVehicleData.avg_consumption = data.avgConsumption;
             }
             if (updatedVehicleData.refill_data) {
-              const indexToDelete = updatedVehicleData.refill_data.findIndex((data) => data.row === data.row);
+              const indexToDelete = updatedVehicleData.refill_data.findIndex((refill) => refill.row === data.row);
               if (indexToDelete != null) {
                 updatedVehicleData.refill_data.splice(indexToDelete, 1);
               }

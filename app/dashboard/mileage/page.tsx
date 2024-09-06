@@ -79,7 +79,7 @@ export default function Mileage() {
               updatedVehicleData.avg_mileage = data.avgMileage;
             }
             if (updatedVehicleData.odometer_data) {
-              const indexToUpdate = updatedVehicleData.odometer_data.findIndex((data) => data.row === data.row);
+              const indexToUpdate = updatedVehicleData.odometer_data.findIndex((odo) => odo.row === data.row);
               if (indexToUpdate != null) {
                 updatedVehicleData.odometer_data[indexToUpdate] = formData;
               }
@@ -105,7 +105,7 @@ export default function Mileage() {
               updatedVehicleData.avg_mileage = data.avgMileage;
             }
             if (updatedVehicleData.odometer_data) {
-              const indexToDelete = updatedVehicleData.odometer_data.findIndex((data) => data.row === data.row);
+              const indexToDelete = updatedVehicleData.odometer_data.findIndex((odo) => odo.row === data.row);
               if (indexToDelete != null) {
                 updatedVehicleData.odometer_data.splice(indexToDelete, 1);
               }
