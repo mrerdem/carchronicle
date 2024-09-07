@@ -1,6 +1,10 @@
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
+import { useAppSelector } from "@/app/_redux/hooks";
 import { LineChart } from "@mui/x-charts/LineChart";
 
 export function MileageOverviewCard(data: VehicleData | null) {
+  const userPrefs = useAppSelector(selectUserPrefs);
+
   if (data != null) {
     if (data.odometer_data?.length > 0 && data.avg_mileage > 0) {
       const sortedData = [...data.odometer_data].sort((a, b) => a.reading - b.reading);
@@ -9,7 +13,10 @@ export function MileageOverviewCard(data: VehicleData | null) {
         <div className="overview-card mileage-overview-card" style={{ gridRowEnd: "span 14" }}>
           <b>Mileage Overview</b>
           <p></p>
-          Average mileage: {data.avg_mileage > 0 ? data.avg_mileage.toFixed(2) + " km/year" : "Insufficient data"}
+          Average mileage:{" "}
+          {data.avg_mileage > 0
+            ? data.avg_mileage.toFixed(2) + " " + userPrefs?.distance.toLowerCase() + "s/year"
+            : "Insufficient data"}
           <LineChart
             xAxis={[
               {

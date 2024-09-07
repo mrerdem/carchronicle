@@ -16,6 +16,7 @@ interface DataEntryDialogProps {
   onSubmit: (task: string, user_id: string, data: InsuranceData) => void;
   onClose: () => void;
   existingFormData: InsuranceData;
+  userPrefs: UserPrefs;
 }
 
 const defaultFormData: InsuranceData = {
@@ -33,7 +34,7 @@ const defaultErrors = {
 };
 
 export default function InsuranceDataForm(props: DataEntryDialogProps) {
-  const { onClose, onSubmit, open, existingFormData } = props;
+  const { onClose, onSubmit, open, existingFormData, userPrefs } = props;
   const [formData, setFormData] = useState<InsuranceData>(defaultFormData);
   const [errors, setErrors] = useState(defaultErrors);
   const sessionData = useAppSelector(selectSessionData);
@@ -91,13 +92,15 @@ export default function InsuranceDataForm(props: DataEntryDialogProps) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      // TextField can store both string and number as string, so collect its value accordingly
-      [name]:
-        value === ""
-          ? null
-          : typeof defaultFormData[name as keyof typeof defaultFormData] === "number"
-          ? e.target.valueAsNumber
-          : value,
+      [name]: value === "" ? null : value,
+    }));
+  };
+
+  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value === "" ? null : e.target.valueAsNumber,
     }));
   };
 
@@ -166,13 +169,13 @@ export default function InsuranceDataForm(props: DataEntryDialogProps) {
             <TextField
               required
               id="standard-basic"
-              label="Cost"
+              label={"Cost (" + userPrefs.currency + ")"}
               variant="outlined"
               name="cost"
               value={formData?.cost ? formData.cost : ""}
               type="number"
               inputMode="numeric"
-              onChange={handleTextInputChange}
+              onChange={handleNumberInputChange}
               error={errors.costError}
               helperText={errors.costError && "This field is required"}
             />

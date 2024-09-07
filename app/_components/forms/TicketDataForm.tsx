@@ -16,6 +16,7 @@ interface DataEntryDialogProps {
   onSubmit: (task: string, user_id: string, data: TicketData) => void;
   onClose: () => void;
   existingFormData: TicketData;
+  userPrefs: UserPrefs;
 }
 
 const defaultFormData: TicketData = {
@@ -31,7 +32,7 @@ const defaultErrors = {
 };
 
 export default function TicketDataForm(props: DataEntryDialogProps) {
-  const { onClose, onSubmit, open, existingFormData } = props;
+  const { onClose, onSubmit, open, existingFormData, userPrefs } = props;
   const [formData, setFormData] = useState<TicketData>(defaultFormData);
   const [errors, setErrors] = useState(defaultErrors);
   const sessionData = useAppSelector(selectSessionData);
@@ -88,13 +89,15 @@ export default function TicketDataForm(props: DataEntryDialogProps) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      // TextField can store both string and number as string, so collect its value accordingly
-      [name]:
-        value === ""
-          ? null
-          : typeof defaultFormData[name as keyof typeof defaultFormData] === "number"
-          ? e.target.valueAsNumber
-          : value,
+      [name]: value === "" ? null : value,
+    }));
+  };
+
+  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value === "" ? null : e.target.valueAsNumber,
     }));
   };
 
@@ -151,11 +154,11 @@ export default function TicketDataForm(props: DataEntryDialogProps) {
             <TextField
               required
               id="standard-basic"
-              label="Cost"
+              label={"Cost (" + userPrefs?.currency + ")"}
               variant="outlined"
               name="cost"
               value={formData?.cost ? formData.cost : ""}
-              onChange={handleTextInputChange}
+              onChange={handleNumberInputChange}
               type="number"
               inputMode="numeric"
               error={errors.costError}

@@ -6,6 +6,7 @@ export function DataCard(
   title: string,
   data: VehicleData | InsuranceData | MaintenanceData | AccidentData | TicketData | RefillData | OdometerData,
   fields: string[],
+  userPrefs: UserPrefs,
   handleEditButtonClick: (value: number) => void
 ) {
   const fieldsWithData: string[] = [];
@@ -34,7 +35,14 @@ export function DataCard(
       <div>
         {fieldsWithData.map((field, index) => (
           <div key={index}>
-            {field.charAt(0).toUpperCase() + field.slice(1).replaceAll("_", " ")}: {data[field as keyof typeof data]}
+            {field.charAt(0).toUpperCase() + field.slice(1).replaceAll("_", " ")}:
+            {" " +
+              (field.includes("cost") || field.includes("price") ? userPrefs.currency + " " : "") +
+              (field.includes("cost") || field.includes("price") || field.includes("amount")
+                ? data[field as keyof typeof data].toFixed(2)
+                : data[field as keyof typeof data]) +
+              (field.includes("reading") ? " " + userPrefs.distance.toLowerCase() : "") +
+              (field.includes("amount") ? " " + userPrefs.volume.toLowerCase() : "")}
           </div>
         ))}
       </div>

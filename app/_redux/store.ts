@@ -3,8 +3,9 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { vehicleDataSlice } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import { sessionDataSlice } from "@/app/_redux/features/session/sessionDataSlice";
 import { uiDataSlice } from "@/app/_redux/features/ui/uiDataSlice";
+import { userPrefsSlice } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
-const rootReducer = combineSlices(vehicleDataSlice, sessionDataSlice, uiDataSlice);
+const rootReducer = combineSlices(vehicleDataSlice, sessionDataSlice, uiDataSlice, userPrefsSlice);
 
 export type RootState = ReturnType<typeof rootReducer>;
 

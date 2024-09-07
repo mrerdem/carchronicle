@@ -11,12 +11,16 @@ import { UserLoginForm, UserRegisterForm } from "@/app/_components/UserForms";
 import { useRouter, usePathname } from "next/navigation";
 import { resetSessionData, selectSessionData, setSessionData } from "@/app/_redux/features/session/sessionDataSlice";
 import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
-import { resetAllVehicleData, selectVehicleData } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
+import {
+  resetAllVehicleData,
+  selectFetchVehicleListStatus,
+  selectVehicleData,
+} from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { setUiData } from "@/app/_redux/features/ui/uiDataSlice";
-import { signout } from "../_supabase/actions";
-import { createClient } from "../_supabase/client";
+import { selectUiData, setUiData } from "@/app/_redux/features/ui/uiDataSlice";
+import { signout } from "@/app/_supabase/actions";
+import { createClient } from "@/app/_supabase/client";
 
 type HeaderProps = {
   navBarState: boolean;
@@ -29,6 +33,8 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
   const dispatch = useAppDispatch();
   const sessionData = useAppSelector(selectSessionData);
   const vehicleData = useAppSelector(selectVehicleData);
+  const uiData = useAppSelector(selectUiData);
+  const fetchVehicleListStatus = useAppSelector(selectFetchVehicleListStatus);
   const MOBILE_WIDTH = 768;
 
   const [state, setState] = useState({
@@ -124,18 +130,20 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
 
   // Dispatch changes to slice
   useEffect(() => {
-    dispatch(setUiData({ mobileLayout: state.mobileLayout }));
+    dispatch(setUiData({ ...uiData, mobileLayout: state.mobileLayout }));
   }, [state.mobileLayout]);
 
   // Re-direct all navigation to home page if not logged in
+  useEffect(() => {}, [pathname]);
+
+  // If no vehicles owned, redirect to vehicles page
   useEffect(() => {
-    if (pathname !== "/" && !state.userLoginStatus) {
-      router.push("/");
+    if (fetchVehicleListStatus === "idle") {
+      if (vehicleData.length === 0) {
+        router.push("/dashboard/vehicles");
+      }
     }
-    if (pathname === "/" && state.userLoginStatus) {
-      router.push("/dashboard");
-    }
-  }, [pathname]);
+  }, [fetchVehicleListStatus]);
 
   // Hide login/register forms after token is received
   useEffect(() => {
@@ -146,11 +154,9 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
         registerFormStatus: false,
         userLoginStatus: true,
       }));
-      if (vehicleData.length > 0) {
-      router.push("/dashboard");
-      }
-      else {
-        router.push("/dashboard/vehicles");
+      // Redirect to dashboard if URL is manually changed to homepage
+      if (pathname === "/") {
+        router.push("/dashboard");
       }
     } else {
       setState((prevState) => ({

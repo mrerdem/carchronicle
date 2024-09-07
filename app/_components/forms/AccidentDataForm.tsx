@@ -85,13 +85,7 @@ export default function AccidentDataForm(props: DataEntryDialogProps) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      // TextField can store both string and number as string, so collect its value accordingly
-      [name]:
-        value === ""
-          ? null
-          : typeof defaultFormData[name as keyof typeof defaultFormData] === "number"
-          ? e.target.valueAsNumber
-          : value,
+      [name]: value === "" ? null : value,
     }));
   };
 

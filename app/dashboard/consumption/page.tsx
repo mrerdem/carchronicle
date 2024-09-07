@@ -9,10 +9,12 @@ import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import { selectActiveVehicleData, updateActiveVehicleData } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import RefillDataForm from "@/app/_components/forms/RefillDataForm";
 import { createClient } from "@/app/_supabase/client";
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Consumption() {
   const [dataToEdit, setDataToEdit] = useState<RefillData>(null);
   const activeVehicleData = useAppSelector(selectActiveVehicleData);
+  const userPrefs = useAppSelector(selectUserPrefs);
   const dispatch = useAppDispatch();
 
   const [refillFormVisibility, setRefillFormVisibility] = useState(false);
@@ -136,12 +138,13 @@ export default function Consumption() {
           onSubmit={handleRefillFormSubmit}
           onClose={closeRefillForm}
           existingFormData={dataToEdit}
+          userPrefs={userPrefs}
         ></RefillDataForm>
         {ConsumptionOverviewCard(activeVehicleData)}
         {activeVehicleData?.refill_data && activeVehicleData.avg_consumption != null && (
           <>
             {activeVehicleData.refill_data.map((data, index) =>
-              DataCard(index + 1, "Refill data", data, REFILL_INFO_PRINTED, handleCardClick)
+              DataCard(index + 1, "Refill data", data, REFILL_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}

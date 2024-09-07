@@ -13,11 +13,13 @@ import {
   updateActiveVehicleData,
 } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import { createClient } from "@/app/_supabase/client";
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Accidents() {
   const [dataToEdit, setDataToEdit] = useState<AccidentData>(null);
   const activeVehicleData = useAppSelector(selectActiveVehicleData);
   const [formVisibility, setFormVisibility] = useState(false);
+  const userPrefs = useAppSelector(selectUserPrefs);
   const dispatch = useAppDispatch();
 
   const openForm = () => {
@@ -134,7 +136,7 @@ export default function Accidents() {
         {activeVehicleData?.accident_data && (
           <>
             {activeVehicleData.accident_data.map((data, index) =>
-              DataCard(index + 1, "Accident data", data, ACCIDENT_INFO_PRINTED, editForm)
+              DataCard(index + 1, "Accident data", data, ACCIDENT_INFO_PRINTED, userPrefs, editForm)
             )}
           </>
         )}

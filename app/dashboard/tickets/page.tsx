@@ -13,10 +13,12 @@ import {
 } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import TicketDataForm from "@/app/_components/forms/TicketDataForm";
 import { createClient } from "@/app/_supabase/client";
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Tickets() {
   const [dataToEdit, setDataToEdit] = useState<TicketData>(null);
   const activeVehicleData = useAppSelector(selectActiveVehicleData);
+  const userPrefs = useAppSelector(selectUserPrefs);
   const [formVisibility, setFormVisibility] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -129,12 +131,13 @@ export default function Tickets() {
           onSubmit={handleTicketFormSubmit}
           onClose={closeForm}
           existingFormData={dataToEdit}
+          userPrefs={userPrefs}
         ></TicketDataForm>
         {TicketsOverviewCard(activeVehicleData)}
         {activeVehicleData?.ticket_data && (
           <>
             {activeVehicleData.ticket_data.map((data, index) =>
-              DataCard(index + 1, "Ticket", data, TICKET_INFO_PRINTED, editForm)
+              DataCard(index + 1, "Ticket", data, TICKET_INFO_PRINTED, userPrefs, editForm)
             )}
           </>
         )}

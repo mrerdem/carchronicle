@@ -98,13 +98,15 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      // TextField can store both string and number as string, so collect its value accordingly
-      [name]:
-        value === ""
-          ? null
-          : typeof defaultFormData[name as keyof typeof defaultFormData] === "number"
-          ? e.target.valueAsNumber
-          : value,
+      [name]: value === "" ? null : value,
+    }));
+  };
+
+  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value === "" ? null : e.target.valueAsNumber,
     }));
   };
 
@@ -220,7 +222,7 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
               value={formData.year ? formData.year : ""}
               type="number"
               inputMode="numeric"
-              onChange={handleTextInputChange}
+              onChange={handleNumberInputChange}
             />
             <TextField
               id="standard-basic"
@@ -274,7 +276,7 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
               name="purchase_price"
               type="number"
               inputMode="numeric"
-              onChange={handleTextInputChange}
+              onChange={handleNumberInputChange}
             />
             <DatePicker
               label="Sell date"
@@ -289,7 +291,7 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
               name="sell_price"
               type="number"
               inputMode="numeric"
-              onChange={handleTextInputChange}
+              onChange={handleNumberInputChange}
             />
           </Box>
         </DialogContent>

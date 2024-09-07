@@ -9,11 +9,13 @@ import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import InsuranceDataForm from "@/app/_components/forms/InsuranceDataForm";
 import { selectActiveVehicleData, updateActiveVehicleData } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import { createClient } from "@/app/_supabase/client";
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Insurance() {
   const [dataToEdit, setDataToEdit] = useState<InsuranceData>(null);
   const activeVehicleData = useAppSelector(selectActiveVehicleData);
   const [formVisibility, setFormVisibility] = useState(false);
+  const userPrefs = useAppSelector(selectUserPrefs);
   const dispatch = useAppDispatch();
 
   const openForm = () => {
@@ -71,7 +73,9 @@ export default function Insurance() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.insurance_data) {
-              const indexToUpdate = updatedVehicleData.insurance_data.findIndex((insurance) => insurance.row === data.row);
+              const indexToUpdate = updatedVehicleData.insurance_data.findIndex(
+                (insurance) => insurance.row === data.row
+              );
               if (indexToUpdate != null) {
                 updatedVehicleData.insurance_data[indexToUpdate] = formData;
               }
@@ -94,7 +98,9 @@ export default function Insurance() {
           if (data != null) {
             const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
             if (updatedVehicleData.insurance_data) {
-              const indexToDelete = updatedVehicleData.insurance_data.findIndex((insurance) => insurance.row === data.row);
+              const indexToDelete = updatedVehicleData.insurance_data.findIndex(
+                (insurance) => insurance.row === data.row
+              );
               if (indexToDelete != null) {
                 updatedVehicleData.insurance_data.splice(indexToDelete, 1);
               }
@@ -125,12 +131,13 @@ export default function Insurance() {
           onSubmit={handleFormSubmit}
           onClose={closeForm}
           existingFormData={dataToEdit}
+          userPrefs={userPrefs}
         ></InsuranceDataForm>
         {InsuranceOverviewCard(activeVehicleData)}
         {activeVehicleData?.insurance_data && (
           <>
             {activeVehicleData.insurance_data.map((data, index) =>
-              DataCard(index + 1, "Insurance data", data, INSURANCE_INFO_PRINTED, handleCardClick)
+              DataCard(index + 1, "Insurance data", data, INSURANCE_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}

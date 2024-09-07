@@ -16,6 +16,7 @@ interface DataEntryDialogProps {
   onSubmit: (task: string, user_id: string, data: RefillData) => void;
   onClose: () => void;
   existingFormData: RefillData;
+  userPrefs: UserPrefs;
 }
 
 const defaultFormData: RefillData = {
@@ -32,7 +33,7 @@ const defaultErrors = {
 };
 
 export default function RefillDataForm(props: DataEntryDialogProps) {
-  const { onClose, onSubmit, open, existingFormData } = props;
+  const { onClose, onSubmit, open, existingFormData, userPrefs } = props;
   const [formData, setFormData] = useState<RefillData>(defaultFormData);
   const [errors, setErrors] = useState(defaultErrors);
   const sessionData = useAppSelector(selectSessionData);
@@ -86,17 +87,11 @@ export default function RefillDataForm(props: DataEntryDialogProps) {
     return false;
   };
 
-  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      // TextField can store both string and number as string, so collect its value accordingly
-      [name]:
-        value === ""
-          ? null
-          : typeof defaultFormData[name as keyof typeof defaultFormData] === "number"
-          ? e.target.valueAsNumber
-          : value,
+      [name]: value === "" ? null : e.target.valueAsNumber,
     }));
   };
 
@@ -145,26 +140,26 @@ export default function RefillDataForm(props: DataEntryDialogProps) {
             <TextField
               required
               id="standard-basic"
-              label="Amount"
+              label={"Amount (" + userPrefs?.volume + ")"}
               variant="outlined"
               name="amount"
               value={formData?.amount ? formData.amount : ""}
               type="number"
               inputMode="numeric"
-              onChange={handleTextInputChange}
+              onChange={handleNumberInputChange}
               error={errors.amountError}
               helperText={errors.amountError && "This field is required"}
             />
             <TextField
               required
               id="standard-basic"
-              label="Cost"
+              label={"Cost (" + userPrefs?.currency + ")"}
               variant="outlined"
               name="cost"
               value={formData?.cost ? formData.cost : ""}
               type="number"
               inputMode="numeric"
-              onChange={handleTextInputChange}
+              onChange={handleNumberInputChange}
               error={errors.costError}
               helperText={errors.costError && "This field is required"}
             />

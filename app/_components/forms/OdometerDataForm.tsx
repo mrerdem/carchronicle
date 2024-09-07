@@ -16,6 +16,7 @@ interface DataEntryDialogProps {
   onSubmit: (task: string, user_id: string, data: OdometerData) => void;
   onClose: () => void;
   existingFormData: OdometerData;
+  userPrefs: UserPrefs;
 }
 
 const defaultFormData: OdometerData = {
@@ -30,7 +31,7 @@ const defaultErrors = {
 };
 
 export default function OdometerDataForm(props: DataEntryDialogProps) {
-  const { onClose, onSubmit, open, existingFormData } = props;
+  const { onClose, onSubmit, open, existingFormData, userPrefs } = props;
   const [formData, setFormData] = useState<OdometerData>(defaultFormData);
   const [errors, setErrors] = useState(defaultErrors);
   const sessionData = useAppSelector(selectSessionData);
@@ -83,17 +84,11 @@ export default function OdometerDataForm(props: DataEntryDialogProps) {
     return false;
   };
 
-  const handleTextInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNumberInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
-      // TextField can store both string and number as string, so collect its value accordingly
-      [name]:
-        value === ""
-          ? null
-          : typeof defaultFormData[name as keyof typeof defaultFormData] === "number"
-          ? e.target.valueAsNumber
-          : value,
+      [name]: value === "" ? null : e.target.valueAsNumber,
     }));
   };
 
@@ -142,13 +137,13 @@ export default function OdometerDataForm(props: DataEntryDialogProps) {
             <TextField
               required
               id="standard-basic"
-              label="Reading"
+              label={"Reading (" + userPrefs?.distance.toLowerCase() + ")"}
               variant="outlined"
               name="reading"
               value={formData?.reading ? formData.reading : ""}
               type="number"
               inputMode="numeric"
-              onChange={handleTextInputChange}
+              onChange={handleNumberInputChange}
               error={errors.readingError}
               helperText={errors.readingError && "This field is required"}
             />

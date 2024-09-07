@@ -4,14 +4,14 @@ import { asyncThunkCreator, buildCreateSlice, createAsyncThunk } from "@reduxjs/
 
 export interface VehicleDataFetchState {
   items: VehicleData[];
-  status: "idle" | "pending" | "failure";
+  status: "null" | "idle" | "pending" | "failure";
   error: string | null;
   activeVehicleIndex: number;
 }
 
 export const initialState: VehicleDataFetchState = {
   items: [],
-  status: "idle",
+  status: "null",
   error: null,
   activeVehicleIndex: -1,
 };
@@ -245,6 +245,7 @@ export const vehicleDataSlice = createAppSlice({
   },
   selectors: {
     selectVehicleData: (vehicleData) => vehicleData.items,
+    selectFetchVehicleListStatus: (vehicleData) => vehicleData.status,
     selectActiveVehicleIndex: (vehicleList) => vehicleList.activeVehicleIndex,
     selectActiveVehicleData: (vehicleData) =>
       vehicleData.activeVehicleIndex > -1 ? vehicleData.items[vehicleData.activeVehicleIndex] : null,
@@ -255,5 +256,10 @@ export const vehicleDataSlice = createAppSlice({
 export const { resetAllVehicleData, activateVehicleByRow, activateVehicleByIndex, updateActiveVehicleData } =
   vehicleDataSlice.actions;
 
-export const { selectActiveVehicleData, selectVehicleData, selectStatus, selectActiveVehicleIndex } =
-  vehicleDataSlice.selectors;
+export const {
+  selectActiveVehicleData,
+  selectVehicleData,
+  selectFetchVehicleListStatus,
+  selectStatus,
+  selectActiveVehicleIndex,
+} = vehicleDataSlice.selectors;

@@ -1,6 +1,10 @@
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
+import { useAppSelector } from "@/app/_redux/hooks";
 import { PieChart } from "@mui/x-charts/PieChart";
 
 export function MaintenanceOverviewCard(data: VehicleData | null) {
+  const userPrefs = useAppSelector(selectUserPrefs);
+
   if (data != null) {
     if (data.maintenance_data?.length > 0) {
       const totalMaintenanceCost = data.maintenance_data.reduce((total, data) => {
@@ -19,7 +23,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
         >
           <b>Maintenance/repair Overview</b>
           <p></p>
-          Total service cost: {totalServiceCost.toFixed(2)}
+          Total service cost: {userPrefs.currency + " " + totalServiceCost.toFixed(2)}
           <br />
           {totalServiceCost > 0 && (
             <PieChart

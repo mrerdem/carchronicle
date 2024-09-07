@@ -9,10 +9,12 @@ import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import OdometerDataForm from "@/app/_components/forms/OdometerDataForm";
 import { selectActiveVehicleData, updateActiveVehicleData } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import { createClient } from "@/app/_supabase/client";
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Mileage() {
   const [dataToEdit, setDataToEdit] = useState<OdometerData>(null);
   const activeVehicleData = useAppSelector(selectActiveVehicleData);
+  const userPrefs = useAppSelector(selectUserPrefs);
   const [odometerFormVisibility, setOdometerFormVisibility] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -136,12 +138,13 @@ export default function Mileage() {
           onSubmit={handleOdometerFormSubmit}
           onClose={closeOdometerForm}
           existingFormData={dataToEdit}
+          userPrefs={userPrefs}
         ></OdometerDataForm>
         {MileageOverviewCard(activeVehicleData)}
         {activeVehicleData?.odometer_data && (
           <>
             {activeVehicleData.odometer_data.map((data, index) =>
-              DataCard(index + 1, "Odometer data", data, ODOMETER_INFO_PRINTED, handleCardClick)
+              DataCard(index + 1, "Odometer data", data, ODOMETER_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}

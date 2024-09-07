@@ -1,21 +1,24 @@
 // Data storage for ui
 
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface UiDataState {
   mobileLayout: boolean;
+  userPrefsFormVisibility: boolean;
 }
 
 const initialState: UiDataState = {
   mobileLayout: false,
+  userPrefsFormVisibility: false,
 };
 
 export const uiDataSlice = createSlice({
   name: "uiData",
   initialState,
   reducers: {
-    setUiData: (state, action: PayloadAction<UiDataState>) => {
-      state.mobileLayout = action.payload.mobileLayout;
+    setUiData: (state, action) => {
+      console.log("action: " + action);
+      return action.payload;
     },
   },
   selectors: {

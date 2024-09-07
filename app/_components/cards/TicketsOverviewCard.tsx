@@ -1,6 +1,10 @@
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
+import { useAppSelector } from "@/app/_redux/hooks";
 import { BarChart } from "@mui/x-charts/BarChart";
 
 export function TicketsOverviewCard(data: VehicleData | null) {
+  const userPrefs = useAppSelector(selectUserPrefs);
+
   if (data != null) {
     if (data.ticket_data?.length > 0) {
       type TicketCost = { year: number; cost: number };
@@ -33,7 +37,7 @@ export function TicketsOverviewCard(data: VehicleData | null) {
         >
           <b>Tickets Overview</b>
           <p></p>
-          Total cost: {totalCost.toFixed(2)}
+          Total cost: {userPrefs.currency + " " + totalCost.toFixed(2)}
           <br />
           {yearlyCosts && (
             <BarChart

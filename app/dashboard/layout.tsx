@@ -3,7 +3,7 @@
 import { Header } from "@/app/_components/Header";
 import NavBar from "@/app/_components/NavBar";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
-import { selectUiData } from "@/app/_redux/features/ui/uiDataSlice";
+import { selectUiData, setUiData } from "@/app/_redux/features/ui/uiDataSlice";
 import {
   activateVehicleByIndex,
   getVehicleDetails,
@@ -13,6 +13,13 @@ import {
 } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import { useEffect, useState } from "react";
+import {
+  getUserPrefs,
+  selectUserPrefs,
+  selectUserPrefsFetchState,
+  setUserPrefs,
+} from "../_redux/features/userPrefs/userPrefsSlice";
+import UserPrefsForm from "../_components/forms/UserPrefsForm";
 
 export default function DashboardLayout({
   children,
@@ -21,6 +28,8 @@ export default function DashboardLayout({
 }>) {
   const vehicleData = useAppSelector(selectVehicleData);
   const sessionData = useAppSelector(selectSessionData);
+  const userPrefs = useAppSelector(selectUserPrefs);
+  const userPrefsFetchState = useAppSelector(selectUserPrefsFetchState);
   const uiData = useAppSelector(selectUiData);
   const activeVehicleIndex = useAppSelector(selectActiveVehicleIndex);
   const dispatch = useAppDispatch();
@@ -30,13 +39,23 @@ export default function DashboardLayout({
     navBarState: true,
   });
 
-  // This effect runs only once when header is mounted
+  // This effect runs only once when layout is mounted
   useEffect(() => {
-    // Fetch vehicle list when component loads
+    // Fetch user preferences if empty
+    if (!userPrefs) {
+      dispatch(getUserPrefs());
+    }
+    // Fetch vehicle list
     if (vehicleData?.length === 0 && sessionData.id) {
       dispatch(getVehicleList());
     }
   }, []);
+
+  useEffect(() => {
+    if (userPrefsFetchState === "idle" && !userPrefs) {
+      dispatch(setUiData({ ...uiData, userPrefsFormVisibility: false }));
+    }
+  }, [userPrefsFetchState]);
 
   useEffect(() => {
     if (vehicleData?.length && activeVehicleIndex < 0) {
@@ -84,11 +103,27 @@ export default function DashboardLayout({
     setState((prevState) => ({ ...prevState, navBarState: state }));
   };
 
+  const closeUserPrefsForm = () => {
+    dispatch(setUiData({ ...uiData, userPrefsFormVisibility: false }));
+  };
+
+  const handleUserPrefsFormSubmit = async (user_id: string, userPrefs: UserPrefs) => {
+    dispatch(setUserPrefs({ user_id: user_id, data: userPrefs }));
+    closeUserPrefsForm();
+  };
+
   return (
     <>
       <NavBar isVisible={state.navBarState} closeNavBar={closeNavBar} />
       <div className="dashboard-container">
         <Header setNavBarState={setNavBarState} navBarState={state.navBarState} />
+        <UserPrefsForm
+          open={uiData.userPrefsFormVisibility}
+          onSubmit={handleUserPrefsFormSubmit}
+          onClose={closeUserPrefsForm}
+          existingFormData={userPrefs}
+        ></UserPrefsForm>
+
         {children}
       </div>
     </>

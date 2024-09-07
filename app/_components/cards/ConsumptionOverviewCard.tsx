@@ -1,9 +1,13 @@
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
+import { useAppSelector } from "@/app/_redux/hooks";
 import { LineChart } from "@mui/x-charts/LineChart";
 
 export function ConsumptionOverviewCard(data: VehicleData | null) {
+  const userPrefs = useAppSelector(selectUserPrefs);
+
   if (data != null) {
     if (data.refill_data?.length > 0 && data.avg_consumption > 0) {
-      const orderedData = JSON.parse(JSON.stringify(data.refill_data));
+      const orderedData: RefillData[] = JSON.parse(JSON.stringify(data.refill_data));
       orderedData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
       return (
@@ -11,7 +15,12 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
           <b>Consumption Overview</b>
           <p></p>
           <div>
-            <>Average consumption: {data.avg_consumption > 0 ? data.avg_consumption.toFixed(2) + " l/year" : "N/A"}</>
+            <>
+              Average consumption:{" "}
+              {data.avg_consumption > 0
+                ? data.avg_consumption.toFixed(2) + " " + userPrefs?.volume.toLowerCase() + "s/year"
+                : "N/A"}
+            </>
           </div>
           <LineChart
             xAxis={[

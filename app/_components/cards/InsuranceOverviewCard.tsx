@@ -1,6 +1,10 @@
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
+import { useAppSelector } from "@/app/_redux/hooks";
 import { BarChart } from "@mui/x-charts/BarChart";
 
 export function InsuranceOverviewCard(data: VehicleData | null) {
+  const userPrefs = useAppSelector(selectUserPrefs);
+
   if (data != null) {
     if (data.insurance_data?.length > 0) {
       type insuranceCost = { year: number; cost: number };
@@ -19,7 +23,7 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
         <div className="overview-card insurance-card" style={{ gridRowEnd: totalCost > 0 ? "span 14" : "span 5" }}>
           <b>Insurance Overview</b>
           <p></p>
-          Total cost: {totalCost.toFixed(2)}
+          Total cost: {userPrefs.currency + " " + totalCost.toFixed(2)}
           <br />
           <BarChart
             xAxis={[

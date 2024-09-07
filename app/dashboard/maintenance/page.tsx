@@ -9,11 +9,13 @@ import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import MaintenanceDataForm from "@/app/_components/forms/MaintenanceDataForm";
 import { selectActiveVehicleData, updateActiveVehicleData } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import { createClient } from "@/app/_supabase/client";
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Maintenance() {
   const [dataToEdit, setDataToEdit] = useState<MaintenanceData>(null);
   const activeVehicleData = useAppSelector(selectActiveVehicleData);
   const [formVisibility, setFormVisibility] = useState(false);
+  const userPrefs = useAppSelector(selectUserPrefs);
   const dispatch = useAppDispatch();
 
   const openForm = () => {
@@ -125,12 +127,13 @@ export default function Maintenance() {
           onSubmit={handleFormSubmit}
           onClose={closeForm}
           existingFormData={dataToEdit}
+          userPrefs={userPrefs}
         ></MaintenanceDataForm>
         {MaintenanceOverviewCard(activeVehicleData)}
         {activeVehicleData?.maintenance_data && (
           <>
             {activeVehicleData.maintenance_data.map((data, index) =>
-              DataCard(index + 1, "Maintenance/repair data", data, MAINTENANCE_INFO_PRINTED, handleCardClick)
+              DataCard(index + 1, "Maintenance/repair data", data, MAINTENANCE_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}

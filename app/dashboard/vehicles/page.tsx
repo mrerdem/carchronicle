@@ -13,12 +13,14 @@ import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
 import VehicleDataForm from "@/app/_components/forms/VehicleDataForm";
 import { VehiclesOverviewCard } from "@/app/_components/cards/VehiclesOverviewCard";
+import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Vehicles() {
   const [dataToEdit, setDataToEdit] = useState<VehicleData | null>(null);
   const vehicleData = useAppSelector(selectVehicleData);
   const dispatch = useAppDispatch();
   const sessionData = useAppSelector(selectSessionData);
+  const userPrefs = useAppSelector(selectUserPrefs);
   const [vehicleFormVisibility, setVehicleFormVisibility] = useState(false);
 
   const openVehicleForm = () => {
@@ -65,7 +67,7 @@ export default function Vehicles() {
           ></VehicleDataForm>
           {VehiclesOverviewCard(vehicleData)}
           {vehicleData.map((data, index) =>
-            DataCard(index + 1, "Vehicle data", data, VEHICLE_INFO_PRINTED, handleCardClick)
+            DataCard(index + 1, "Vehicle data", data, VEHICLE_INFO_PRINTED, userPrefs, handleCardClick)
           )}
         </div>
       </div>

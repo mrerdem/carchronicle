@@ -7,10 +7,10 @@
   --border-radius: 8px;
   --shadow-alpha: 0.1;
   --row-height: 20px;
-  --color-1: #073B4C;
-  --color-2: #EBEBEB;
-  --color-3: #0EAD69;
-  --color-4: #ED6A5A;
+  --color-1: #073b4c;
+  --color-2: #ebebeb;
+  --color-3: #0ead69;
+  --color-4: #ed6a5a;
   --color-5: #ffffff80;
   --color-6: #00000080;
 }
@@ -365,6 +365,17 @@ body {
 .settings-container {
   margin: var(--border-radius);
   padding: var(--border-radius);
+  display: flex;
+}
+
+.settings-container .col1 {
+  min-width: 56px;
+}
+
+.settings-container .col2 {
+  flex: 1;
+  padding-left: var(--border-radius);
+  max-width: 240px;
 }
 
 .MuiDialog-root {

@@ -1,3 +1,9 @@
+type UserPrefs = {
+  currency: string;
+  volume: string;
+  distance: string;
+};
+
 type InsuranceData = {
   row: number;
   provider: string;
