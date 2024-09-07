@@ -163,6 +163,10 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
         ...prevState,
         userLoginStatus: false,
       }));
+      // Redirect to homepage if URL is manually changed to dashboard
+      if (pathname != "/") {
+        router.push("/");
+      }
     }
   }, [sessionData.id]);
 

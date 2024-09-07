@@ -169,7 +169,7 @@ export default function InsuranceDataForm(props: DataEntryDialogProps) {
             <TextField
               required
               id="standard-basic"
-              label={"Cost (" + userPrefs.currency + ")"}
+              label={"Cost (" + userPrefs?.currency + ")"}
               variant="outlined"
               name="cost"
               value={formData?.cost ? formData.cost : ""}
