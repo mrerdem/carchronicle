@@ -53,7 +53,7 @@ export default function DashboardLayout({
 
   useEffect(() => {
     if (userPrefsFetchState === "idle" && !userPrefs) {
-      dispatch(setUiData({ ...uiData, userPrefsFormVisibility: false }));
+      dispatch(setUiData({ ...uiData, userPrefsFormVisibility: true }));
     }
   }, [userPrefsFetchState]);
 
