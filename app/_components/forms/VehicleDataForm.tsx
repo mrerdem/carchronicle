@@ -31,7 +31,7 @@ const defaultFormData: VehicleData = {
   sell_price: null,
   avg_mileage: null,
   avg_consumption: null,
-  refill_data: null,
+  refuel_data: null,
   odometer_data: null,
   insurance_data: null,
   maintenance_data: null,

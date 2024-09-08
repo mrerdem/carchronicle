@@ -3,41 +3,41 @@ import React, { useState } from "react";
 import { VehicleSelector } from "@/app/_components/VehicleSelector";
 import { DataInputButton } from "@/app/_components/DataInputButton";
 import { DataCard } from "@/app/_components/cards/DataCard";
-import { REFILL_INFO_PRINTED } from "@/app/constants";
+import { REFUEL_INFO_PRINTED } from "@/app/constants";
 import { ConsumptionOverviewCard } from "@/app/_components/cards/ConsumptionOverviewCard";
 import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import { selectActiveVehicleData, updateActiveVehicleData } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
-import RefillDataForm from "@/app/_components/forms/RefillDataForm";
+import RefuelDataForm from "@/app/_components/forms/RefuelDataForm";
 import { createClient } from "@/app/_supabase/client";
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Consumption() {
-  const [dataToEdit, setDataToEdit] = useState<RefillData>(null);
+  const [dataToEdit, setDataToEdit] = useState<RefuelData>(null);
   const activeVehicleData = useAppSelector(selectActiveVehicleData);
   const userPrefs = useAppSelector(selectUserPrefs);
   const dispatch = useAppDispatch();
 
-  const [refillFormVisibility, setRefillFormVisibility] = useState(false);
+  const [formVisibility, setFormVisibility] = useState(false);
 
-  const openRefillForm = () => {
-    setRefillFormVisibility(true);
+  const openForm = () => {
+    setFormVisibility(true);
   };
 
-  const closeRefillForm = () => {
-    setRefillFormVisibility(false);
+  const closeForm = () => {
+    setFormVisibility(false);
     setDataToEdit(null);
   };
 
   const handleCardClick = (row: number) => {
-    setDataToEdit(activeVehicleData.refill_data.find((data) => data.row === row));
-    openRefillForm();
+    setDataToEdit(activeVehicleData.refuel_data.find((data) => data.row === row));
+    openForm();
   };
 
-  const handleRefillFormSubmit = async (task: string, user_id: string, formData: RefillData) => {
+  const handleFormSubmit = async (task: string, user_id: string, formData: RefuelData) => {
     const supabase = createClient();
     if (task === "add") {
       try {
-        const { data, error } = await supabase.rpc("add_refill_data", {
+        const { data, error } = await supabase.rpc("add_refuel_data", {
           data: { ...formData, vehicle_row: activeVehicleData.row, user_id: user_id },
         });
         if (!error) {
@@ -46,13 +46,13 @@ export default function Consumption() {
             if (data.avgConsumption != null) {
               updatedVehicleData.avg_consumption = data.avgConsumption;
             }
-            if (updatedVehicleData.refill_data) {
-              updatedVehicleData.refill_data.push({
+            if (updatedVehicleData.refuel_data) {
+              updatedVehicleData.refuel_data.push({
                 ...formData,
                 row: data.row,
               });
             } else {
-              updatedVehicleData.refill_data = [
+              updatedVehicleData.refuel_data = [
                 {
                   ...formData,
                   row: data.row,
@@ -60,7 +60,7 @@ export default function Consumption() {
               ];
             }
             dispatch(updateActiveVehicleData(updatedVehicleData));
-            closeRefillForm();
+            closeForm();
           }
         } else {
           throw new Error("API response failed");
@@ -70,7 +70,7 @@ export default function Consumption() {
       }
     } else if (task === "update") {
       try {
-        const { data, error } = await supabase.rpc("update_refill_data", {
+        const { data, error } = await supabase.rpc("update_refuel_data", {
           data: { ...formData, user_id: user_id, vehicle_row: activeVehicleData.row },
         });
 
@@ -80,14 +80,14 @@ export default function Consumption() {
             if (data.avgConsumption != null) {
               updatedVehicleData.avg_consumption = data.avgConsumption;
             }
-            if (updatedVehicleData.refill_data) {
-              const indexToUpdate = updatedVehicleData.refill_data.findIndex((refill) => refill.row === data.row);
+            if (updatedVehicleData.refuel_data) {
+              const indexToUpdate = updatedVehicleData.refuel_data.findIndex((refuel) => refuel.row === data.row);
               if (indexToUpdate != null) {
-                updatedVehicleData.refill_data[indexToUpdate] = formData;
+                updatedVehicleData.refuel_data[indexToUpdate] = formData;
               }
             }
             dispatch(updateActiveVehicleData(updatedVehicleData));
-            closeRefillForm();
+            closeForm();
           }
         } else {
           throw new Error("API response failed");
@@ -97,7 +97,7 @@ export default function Consumption() {
       }
     } else if (task === "delete") {
       try {
-        const { data, error } = await supabase.rpc("delete_refill_data", {
+        const { data, error } = await supabase.rpc("delete_refuel_data", {
           data: { ...formData, user_id: user_id, vehicle_row: activeVehicleData.row },
         });
         if (!error) {
@@ -106,14 +106,14 @@ export default function Consumption() {
             if (data.avgConsumption != null) {
               updatedVehicleData.avg_consumption = data.avgConsumption;
             }
-            if (updatedVehicleData.refill_data) {
-              const indexToDelete = updatedVehicleData.refill_data.findIndex((refill) => refill.row === data.row);
+            if (updatedVehicleData.refuel_data) {
+              const indexToDelete = updatedVehicleData.refuel_data.findIndex((refuel) => refuel.row === data.row);
               if (indexToDelete != null) {
-                updatedVehicleData.refill_data.splice(indexToDelete, 1);
+                updatedVehicleData.refuel_data.splice(indexToDelete, 1);
               }
             }
             dispatch(updateActiveVehicleData(updatedVehicleData));
-            closeRefillForm();
+            closeForm();
           }
         } else {
           throw new Error("API response failed");
@@ -129,22 +129,22 @@ export default function Consumption() {
       {activeVehicleData && (
         <div className="options-container">
           <VehicleSelector />
-          {activeVehicleData && <DataInputButton name={"refill data"} clickAction={openRefillForm}></DataInputButton>}
+          {activeVehicleData && <DataInputButton name={"refuel data"} clickAction={openForm}></DataInputButton>}
         </div>
       )}
       <div className="card-container">
-        <RefillDataForm
-          open={refillFormVisibility}
-          onSubmit={handleRefillFormSubmit}
-          onClose={closeRefillForm}
+        <RefuelDataForm
+          open={formVisibility}
+          onSubmit={handleFormSubmit}
+          onClose={closeForm}
           existingFormData={dataToEdit}
           userPrefs={userPrefs}
-        ></RefillDataForm>
+        ></RefuelDataForm>
         {ConsumptionOverviewCard(activeVehicleData)}
-        {activeVehicleData?.refill_data && activeVehicleData.avg_consumption != null && (
+        {activeVehicleData?.refuel_data && (
           <>
-            {activeVehicleData.refill_data.map((data, index) =>
-              DataCard(index + 1, "Refill data", data, REFILL_INFO_PRINTED, userPrefs, handleCardClick)
+            {activeVehicleData.refuel_data.map((data, index) =>
+              DataCard(index + 1, "Refuel data", data, REFUEL_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}

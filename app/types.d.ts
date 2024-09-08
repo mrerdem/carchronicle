@@ -52,7 +52,7 @@ type VehicleData = {
   sell_price: number;
   avg_mileage: number; // Average mileage per unit time
   avg_consumption: number; // Average gas consumption per unit distance
-  refill_data: RefillData[];
+  refuel_data: RefuelData[];
   odometer_data: OdometerData[];
   insurance_data: InsuranceData[];
   maintenance_data: MaintenanceData[];
@@ -73,7 +73,7 @@ type OdometerData = {
   reading: number;
 };
 
-type RefillData = {
+type RefuelData = {
   row: number;
   date: string;
   amount: number;

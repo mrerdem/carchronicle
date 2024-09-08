@@ -23,7 +23,7 @@ export const ODOMETER_INFO_PRINTED = ["reading", "date"];
 
 export const MAINTENANCE_INFO_PRINTED = ["type", "provider", "work", "start_date", "end_date", "cost"];
 
-export const REFILL_INFO_PRINTED = ["amount", "date", "cost"];
+export const REFUEL_INFO_PRINTED = ["amount", "date", "cost"];
 
 export const TICKET_INFO_PRINTED = ["date", "reason", "cost"];
 

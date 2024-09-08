@@ -4,7 +4,7 @@ import EditRoundedIcon from "@mui/icons-material/EditRounded";
 export function DataCard(
   key: number,
   title: string,
-  data: VehicleData | InsuranceData | MaintenanceData | AccidentData | TicketData | RefillData | OdometerData,
+  data: VehicleData | InsuranceData | MaintenanceData | AccidentData | TicketData | RefuelData | OdometerData,
   fields: string[],
   userPrefs: UserPrefs,
   handleEditButtonClick: (value: number) => void

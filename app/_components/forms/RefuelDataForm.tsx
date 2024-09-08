@@ -13,13 +13,13 @@ import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlic
 
 interface DataEntryDialogProps {
   open: boolean;
-  onSubmit: (task: string, user_id: string, data: RefillData) => void;
+  onSubmit: (task: string, user_id: string, data: RefuelData) => void;
   onClose: () => void;
-  existingFormData: RefillData;
+  existingFormData: RefuelData;
   userPrefs: UserPrefs;
 }
 
-const defaultFormData: RefillData = {
+const defaultFormData: RefuelData = {
   row: null,
   date: dayjs().toISOString().split("T")[0],
   amount: null,
@@ -32,9 +32,9 @@ const defaultErrors = {
   costError: false,
 };
 
-export default function RefillDataForm(props: DataEntryDialogProps) {
+export default function RefuelDataForm(props: DataEntryDialogProps) {
   const { onClose, onSubmit, open, existingFormData, userPrefs } = props;
-  const [formData, setFormData] = useState<RefillData>(defaultFormData);
+  const [formData, setFormData] = useState<RefuelData>(defaultFormData);
   const [errors, setErrors] = useState(defaultErrors);
   const sessionData = useAppSelector(selectSessionData);
 
@@ -95,7 +95,7 @@ export default function RefillDataForm(props: DataEntryDialogProps) {
     }));
   };
 
-  const handleSelectDateChange = (field: keyof RefillData, value: dayjs.Dayjs) => {
+  const handleSelectDateChange = (field: keyof RefuelData, value: dayjs.Dayjs) => {
     setFormData((prevData) => ({
       ...prevData,
       [field]: value?.isValid && value.toString() != "Invalid Date" ? value.format("YYYY-MM-DD") : null,
@@ -106,7 +106,7 @@ export default function RefillDataForm(props: DataEntryDialogProps) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Dialog open={open} onClose={handleClose}>
         <div className="form-title-container">
-          <DialogTitle>Refill details</DialogTitle>
+          <DialogTitle>Refuel details</DialogTitle>
           <IconButton onClick={handleReset}>
             <RestartAltIcon />
           </IconButton>

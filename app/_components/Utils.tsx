@@ -2,7 +2,7 @@
 export function getGridRowNum(
   possibleRows: string[], // List of fields printed in card
   infoObject: // Object whose info to be printed
-  VehicleData[] | RefillData[] | InsuranceData[] | RefillData[] | MaintenanceData[] | AccidentData[] | TicketData[],
+  VehicleData[] | RefuelData[] | InsuranceData[] | RefuelData[] | MaintenanceData[] | AccidentData[] | TicketData[],
   graph: boolean // To allocate space for graph (10 rows)
 ): number {
   const minRows = 4; // 4 for title and vertical padding
