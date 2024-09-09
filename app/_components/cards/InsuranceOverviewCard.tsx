@@ -23,7 +23,8 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
         <div className="card overview-card insurance-card" style={{ gridRowEnd: totalCost > 0 ? "span 14" : "span 5" }}>
           <div className="card-title">Insurance Overview</div>
           <p></p>
-          Total cost: {userPrefs.currency + " " + totalCost.toFixed(2)}
+          Total cost:{" "}
+          {Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(totalCost)}
           <br />
           <BarChart
             xAxis={[

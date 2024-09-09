@@ -38,9 +38,10 @@ export function DataCard(
           <div key={index}>
             {capitalizeFirstLetter(field).replaceAll("_", " ")}:
             {" " +
-              (field.includes("cost") || field.includes("price") ? userPrefs?.currency + " " : "") +
-              (field.includes("cost") || field.includes("price") || field.includes("amount")
-                ? data[field as keyof typeof data].toFixed(2)
+              (field.includes("cost") || field.includes("price")
+                ? Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(
+                    data[field as keyof typeof data]
+                  )
                 : data[field as keyof typeof data]) +
               (field.includes("reading") ? " " + userPrefs?.distance.toLowerCase() : "") +
               (field.includes("amount") ? " " + userPrefs?.volume.toLowerCase() : "")}

@@ -23,7 +23,8 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
         >
           <div className="card-title">Maintenance/Repair Overview</div>
           <p></p>
-          Total service cost: {userPrefs.currency + " " + totalServiceCost.toFixed(2)}
+          Total service cost:{" "}
+          {Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(totalServiceCost)}
           <br />
           {totalServiceCost > 0 && (
             <PieChart

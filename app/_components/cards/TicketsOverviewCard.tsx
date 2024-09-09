@@ -37,7 +37,8 @@ export function TicketsOverviewCard(data: VehicleData | null) {
         >
           <div className="card-title">Tickets Overview</div>
           <p></p>
-          Total cost: {userPrefs.currency + " " + totalCost.toFixed(2)}
+          Total cost:{" "}
+          {Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(totalCost)}
           <br />
           {yearlyCosts && (
             <BarChart

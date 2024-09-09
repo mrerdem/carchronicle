@@ -59,7 +59,14 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
               margin={{ top: 20 }}
               grid={{ vertical: false, horizontal: true }}
             />
-            <div>Gas price ({userPrefs.currency + "/" + userPrefs.volume.toLowerCase()}): </div>
+            <div>
+              Gas price (
+              {Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).formatToParts()[0]
+                .value +
+                "/" +
+                userPrefs.volume.toLowerCase()}
+              ):{" "}
+            </div>
             <LineChart
               xAxis={[
                 {
