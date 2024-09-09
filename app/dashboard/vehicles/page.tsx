@@ -67,7 +67,7 @@ export default function Vehicles() {
           ></VehicleDataForm>
           {VehiclesOverviewCard(vehicleData)}
           {vehicleData.map((data, index) =>
-            DataCard(index + 1, "Vehicle data", data, VEHICLE_INFO_PRINTED, userPrefs, handleCardClick)
+            DataCard(index + 1, "Vehicle info", data, VEHICLE_INFO_PRINTED, userPrefs, handleCardClick)
           )}
         </div>
       </div>

@@ -118,7 +118,7 @@ export default function Maintenance() {
       {activeVehicleData && (
         <div className="options-container">
           <VehicleSelector />
-          <DataInputButton name={"maintenance data"} clickAction={openForm}></DataInputButton>
+          <DataInputButton name={"maintenance info"} clickAction={openForm}></DataInputButton>
         </div>
       )}
       <div className="card-container">
@@ -133,7 +133,7 @@ export default function Maintenance() {
         {activeVehicleData?.maintenance_data && (
           <>
             {activeVehicleData.maintenance_data.map((data, index) =>
-              DataCard(index + 1, "Maintenance/repair data", data, MAINTENANCE_INFO_PRINTED, userPrefs, handleCardClick)
+              DataCard(index + 1, "Maintenance/repair info", data, MAINTENANCE_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}

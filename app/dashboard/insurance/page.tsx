@@ -122,7 +122,7 @@ export default function Insurance() {
       {activeVehicleData && (
         <div className="options-container">
           <VehicleSelector />
-          <DataInputButton name={"insurance data"} clickAction={openForm}></DataInputButton>
+          <DataInputButton name={"insurance info"} clickAction={openForm}></DataInputButton>
         </div>
       )}
       <div className="card-container">
@@ -137,7 +137,7 @@ export default function Insurance() {
         {activeVehicleData?.insurance_data && (
           <>
             {activeVehicleData.insurance_data.map((data, index) =>
-              DataCard(index + 1, "Insurance data", data, INSURANCE_INFO_PRINTED, userPrefs, handleCardClick)
+              DataCard(index + 1, "Insurance info", data, INSURANCE_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}

@@ -21,7 +21,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
           id="maintenance-card"
           style={{ gridRowEnd: totalServiceCost > 0 ? "span 14" : "span 5" }}
         >
-          <div className="card-title">Maintenance/repair Overview</div>
+          <div className="card-title">Maintenance/Repair Overview</div>
           <p></p>
           Total service cost: {userPrefs.currency + " " + totalServiceCost.toFixed(2)}
           <br />
@@ -57,7 +57,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
     } else {
       return (
         <div className="overview-card maintenance-overview-card" style={{ gridRowEnd: "span 5" }}>
-          <div className="card-title">Maintenance/repair Overview</div>
+          <div className="card-title">Maintenance/Repair Overview</div>
           <p></p>
           <div className="card-text">Add maintenance/repair info to get an overview.</div>
         </div>
@@ -66,7 +66,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
   } else {
     return (
       <div className="overview-card maintenance-overview-card" style={{ gridRowEnd: "span 5" }}>
-        <div className="card-title">Maintenance/repair Overview</div>
+        <div className="card-title">Maintenance/Repair Overview</div>
         <p></p>
         <div className="card-text">Add a vehicle first.</div>
       </div>

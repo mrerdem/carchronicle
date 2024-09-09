@@ -129,7 +129,7 @@ export default function Consumption() {
       {activeVehicleData && (
         <div className="options-container">
           <VehicleSelector />
-          {activeVehicleData && <DataInputButton name={"refuel data"} clickAction={openForm}></DataInputButton>}
+          {activeVehicleData && <DataInputButton name={"refuel info"} clickAction={openForm}></DataInputButton>}
         </div>
       )}
       <div className="card-container">
@@ -144,7 +144,7 @@ export default function Consumption() {
         {activeVehicleData?.refuel_data && (
           <>
             {activeVehicleData.refuel_data.map((data, index) =>
-              DataCard(index + 1, "Refuel data", data, REFUEL_INFO_PRINTED, userPrefs, handleCardClick)
+              DataCard(index + 1, "Refuel info", data, REFUEL_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}

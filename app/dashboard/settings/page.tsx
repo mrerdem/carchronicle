@@ -18,25 +18,20 @@ export default function Settings() {
   return (
     <div className="data-container">
       <div className="settings-container">
-        <div className="col1">
-          <p>
-            E-mail:
-            <br />
-            Units:
-          </p>
+        <div>
+          <div className="col1">E-mail:</div>
+          <div className="col2">{sessionData.email}</div>
+          <div className="col3"></div>
         </div>
-        <div className="col2">
-          <p>
-            {sessionData.email}
-            <br />
-            {userPrefs ? Object.values(userPrefs).join(", ") : ""}
-          </p>
-        </div>
-        <div className="col3">
-          <p>
-            <br />
-            <button onClick={handleUserPrefsChange}>Change</button>
-          </p>
+        <div>
+          <div className="col1">Units:</div>
+          <div className="col2">{userPrefs ? Object.values(userPrefs).join(", ") : ""}</div>
+          <div className="col3">
+            {" "}
+            <button className="settings-button" onClick={handleUserPrefsChange}>
+              Change
+            </button>
+          </div>
         </div>
       </div>
     </div>

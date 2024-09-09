@@ -129,7 +129,7 @@ export default function Mileage() {
       {activeVehicleData && (
         <div className="options-container">
           <VehicleSelector />
-          <DataInputButton name={"odometer data"} clickAction={openOdometerForm}></DataInputButton>
+          <DataInputButton name={"odometer reading"} clickAction={openOdometerForm}></DataInputButton>
         </div>
       )}
       <div className="card-container">
@@ -144,7 +144,7 @@ export default function Mileage() {
         {activeVehicleData?.odometer_data && (
           <>
             {activeVehicleData.odometer_data.map((data, index) =>
-              DataCard(index + 1, "Odometer data", data, ODOMETER_INFO_PRINTED, userPrefs, handleCardClick)
+              DataCard(index + 1, "Odometer reading", data, ODOMETER_INFO_PRINTED, userPrefs, handleCardClick)
             )}
           </>
         )}
