@@ -48,7 +48,7 @@ function NavBar({ isVisible, closeNavBar }: NavBarProps) {
   // Set selected item in case user navigates via URL instead of UI
   useEffect(() => {
     setSelectedNavItemIndex(navBarButtons.findIndex((button) => button.route === pathname));
-  }, []);
+  }, [pathname]);
 
   return (
     isVisible && (

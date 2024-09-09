@@ -11,7 +11,7 @@ export function MileageOverviewCard(data: VehicleData | null) {
 
       return (
         <div className="overview-card mileage-overview-card" style={{ gridRowEnd: "span 14" }}>
-          <b>Mileage Overview</b>
+          <div className="card-title">Mileage Overview</div>
           <p></p>
           Average mileage:{" "}
           {data.avg_mileage > 0
@@ -38,18 +38,18 @@ export function MileageOverviewCard(data: VehicleData | null) {
     } else {
       return (
         <div className="overview-card mileage-overview-card" style={{ gridRowEnd: "span 5" }}>
-          <b>Mileage Overview</b>
+          <div className="card-title">Mileage Overview</div>
           <p></p>
-          Add more data to get an overview.
+          <div className="card-text">Add odometer reading to get an overview.</div>
         </div>
       );
     }
   } else {
     return (
       <div className="overview-card mileage-overview-card" style={{ gridRowEnd: "span 5" }}>
-        <b>Mileage Overview</b>
+        <div className="card-title">Mileage Overview</div>
         <p></p>
-        Add a vehicle first.
+        <div className="card-text">Add a vehicle first.</div>
       </div>
     );
   }

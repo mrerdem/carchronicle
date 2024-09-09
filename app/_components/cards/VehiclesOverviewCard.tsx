@@ -20,7 +20,7 @@ export function VehiclesOverviewCard(data: VehicleData[]) {
               5),
         }}
       >
-        <b>Vehicles Overview</b>
+        <div className="card-title">Vehicles Overview</div>
         <p></p>
         <div>
           <>Total vehicles: {data.length}</>
@@ -38,9 +38,9 @@ export function VehiclesOverviewCard(data: VehicleData[]) {
   } else {
     return (
       <div className="overview-card vehicles-overview-card" style={{ gridRowEnd: "span 5" }}>
-        <b>Vehicles Overview</b>
+        <div className="card-title">Vehicles Overview</div>
         <p></p>
-        Add a vehicle first.
+        <div className="card-text">Add a vehicle to get an overview.</div>
       </div>
     );
   }

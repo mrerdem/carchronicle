@@ -29,7 +29,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
       return (
         <>
           <div className="overview-card consumption-overview-card" style={rowSpan}>
-            <b>Consumption Overview</b>
+            <div className="card-title">Consumption Overview</div>
             <p></p>
             <div>
               {data.avg_consumption > 0 ? (
@@ -82,18 +82,18 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
     } else {
       return (
         <div className="overview-card consumption-overview-card" style={{ gridRowEnd: "span 5" }}>
-          <b>Consumption Overview</b>
+          <div className="card-title">Consumption Overview</div>
           <p></p>
-          Add more data to get an overview.
+          <div className="card-text">Add refuel info to get an overview.</div>
         </div>
       );
     }
   } else {
     return (
       <div className="overview-card consumption-overview-card" style={{ gridRowEnd: "span 5" }}>
-        <b>Consumption Overview</b>
+        <div className="card-title">Consumption Overview</div>
         <p></p>
-        Add a vehicle first.
+        <div className="card-text">Add a vehicle first.</div>
       </div>
     );
   }

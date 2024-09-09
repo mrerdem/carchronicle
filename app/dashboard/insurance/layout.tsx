@@ -1,4 +1,6 @@
-"use client";
+export const metadata = {
+  title: "Insurance | CarChronicle",
+};
 
 export default function InsuranceLayout({
   children,

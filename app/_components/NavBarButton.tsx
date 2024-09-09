@@ -1,5 +1,6 @@
 import React from "react";
 import { SvgIconComponent } from "@mui/icons-material";
+import { capitalizeFirstLetter } from "./Utils";
 
 type NavBarButtonProps = {
   icon: SvgIconComponent;
@@ -18,7 +19,7 @@ export function NavBarButton({
     <>
       <button onClick={ClickAction} id={selected ? "selected" : ""}>
         <ItemIcon />
-        &ensp; {Title.charAt(0).toUpperCase() + Title.slice(1)}
+        &ensp; {capitalizeFirstLetter(Title)}
       </button>
     </>
   );

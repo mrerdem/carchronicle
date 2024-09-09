@@ -21,7 +21,7 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
 
       return (
         <div className="overview-card insurance-card" style={{ gridRowEnd: totalCost > 0 ? "span 14" : "span 5" }}>
-          <b>Insurance Overview</b>
+          <div className="card-title">Insurance Overview</div>
           <p></p>
           Total cost: {userPrefs.currency + " " + totalCost.toFixed(2)}
           <br />
@@ -46,18 +46,18 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
     } else {
       return (
         <div className="overview-card insurance-overview-card" style={{ gridRowEnd: "span 5" }}>
-          <b>Insurance Overview</b>
+          <div className="card-title">Insurance Overview</div>
           <p></p>
-          Add more data to get an overview.
+          <div className="card-text">Add insurance info to get an overview.</div>
         </div>
       );
     }
   } else {
     return (
       <div className="overview-card insurance-overview-card" style={{ gridRowEnd: "span 5" }}>
-        <b>Insurance Overview</b>
+        <div className="card-title">Insurance Overview</div>
         <p></p>
-        Add a vehicle first.
+        <div className="card-text">Add a vehicle first.</div>
       </div>
     );
   }

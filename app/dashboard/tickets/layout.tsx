@@ -1,4 +1,6 @@
-"use client";
+export const metadata = {
+  title: "Tickets | CarChronicle",
+};
 
 export default function TicketsLayout({
   children,

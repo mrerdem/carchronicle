@@ -1,4 +1,6 @@
-"use client";
+export const metadata = {
+  title: "Maintenance | CarChronicle",
+};
 
 export default function MaintenanceLayout({
   children,

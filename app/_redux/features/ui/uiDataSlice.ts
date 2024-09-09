@@ -17,7 +17,6 @@ export const uiDataSlice = createSlice({
   initialState,
   reducers: {
     setUiData: (state, action) => {
-      console.log("action: " + action);
       return action.payload;
     },
   },

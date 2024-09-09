@@ -1,4 +1,6 @@
-"use client";
+export const metadata = {
+  title: "Mileage | CarChronicle",
+};
 
 export default function MileageLayout({
   children,

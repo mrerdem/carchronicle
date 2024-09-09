@@ -35,7 +35,7 @@ export function TicketsOverviewCard(data: VehicleData | null) {
           className="overview-card tickets-overview-card"
           style={{ gridRowEnd: totalCost > 0 ? "span 14" : "span 5" }}
         >
-          <b>Tickets Overview</b>
+          <div className="card-title">Tickets Overview</div>
           <p></p>
           Total cost: {userPrefs.currency + " " + totalCost.toFixed(2)}
           <br />
@@ -58,18 +58,18 @@ export function TicketsOverviewCard(data: VehicleData | null) {
     } else {
       return (
         <div className="overview-card tickets-overview-card" style={{ gridRowEnd: "span 5" }}>
-          <b>Tickets Overview</b>
+          <div className="card-title">Tickets Overview</div>
           <p></p>
-          Add more data to get an overview.
+          <div className="card-text">Add a ticket to get an overview.</div>
         </div>
       );
     }
   } else {
     return (
       <div className="overview-card tickets-overview-card" style={{ gridRowEnd: "span 5" }}>
-        <b>Tickets Overview</b>
+        <div className="card-title">Tickets Overview</div>
         <p></p>
-        Add a vehicle first.
+        <div className="card-text">Add a vehicle first.</div>
       </div>
     );
   }

@@ -21,6 +21,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { selectUiData, setUiData } from "@/app/_redux/features/ui/uiDataSlice";
 import { signout } from "@/app/_supabase/actions";
 import { createClient } from "@/app/_supabase/client";
+import { capitalizeFirstLetter } from "./Utils";
 
 type HeaderProps = {
   navBarState: boolean;
@@ -202,7 +203,7 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
           {navBarState ? <CloseIcon /> : <MenuIcon />}
         </button>
         <div className="route-label" style={{ display: state.mobileLayout && state.userLoginStatus ? "flex" : "none" }}>
-          <p>{navTitle.charAt(0).toUpperCase() + navTitle.slice(1)}</p>
+          <p>{capitalizeFirstLetter(navTitle)}</p>
         </div>
         <div className="expanding-space"></div>
         <UserAccountButton
