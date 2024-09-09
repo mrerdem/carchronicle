@@ -28,7 +28,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
 
       return (
         <>
-          <div className="overview-card consumption-overview-card" style={rowSpan}>
+          <div className="card overview-card consumption-overview-card" style={rowSpan}>
             <div className="card-title">Consumption Overview</div>
             <p></p>
             <div>
@@ -59,7 +59,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
               margin={{ top: 20 }}
               grid={{ vertical: false, horizontal: true }}
             />
-            <div>Price ({userPrefs.currency + "/" + userPrefs.volume.toLowerCase()}): </div>
+            <div>Gas price ({userPrefs.currency + "/" + userPrefs.volume.toLowerCase()}): </div>
             <LineChart
               xAxis={[
                 {
@@ -81,7 +81,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
       );
     } else {
       return (
-        <div className="overview-card consumption-overview-card" style={{ gridRowEnd: "span 5" }}>
+        <div className="card overview-card consumption-overview-card" style={{ gridRowEnd: "span 5" }}>
           <div className="card-title">Consumption Overview</div>
           <p></p>
           <div className="card-text">Add refuel info to get an overview.</div>
@@ -90,7 +90,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
     }
   } else {
     return (
-      <div className="overview-card consumption-overview-card" style={{ gridRowEnd: "span 5" }}>
+      <div className="card overview-card consumption-overview-card" style={{ gridRowEnd: "span 5" }}>
         <div className="card-title">Consumption Overview</div>
         <p></p>
         <div className="card-text">Add a vehicle first.</div>

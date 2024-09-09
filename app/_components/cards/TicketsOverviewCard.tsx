@@ -32,7 +32,7 @@ export function TicketsOverviewCard(data: VehicleData | null) {
 
       return (
         <div
-          className="overview-card tickets-overview-card"
+          className="card overview-card tickets-overview-card"
           style={{ gridRowEnd: totalCost > 0 ? "span 14" : "span 5" }}
         >
           <div className="card-title">Tickets Overview</div>
@@ -57,7 +57,7 @@ export function TicketsOverviewCard(data: VehicleData | null) {
       );
     } else {
       return (
-        <div className="overview-card tickets-overview-card" style={{ gridRowEnd: "span 5" }}>
+        <div className="card overview-card tickets-overview-card" style={{ gridRowEnd: "span 5" }}>
           <div className="card-title">Tickets Overview</div>
           <p></p>
           <div className="card-text">Add a ticket to get an overview.</div>
@@ -66,7 +66,7 @@ export function TicketsOverviewCard(data: VehicleData | null) {
     }
   } else {
     return (
-      <div className="overview-card tickets-overview-card" style={{ gridRowEnd: "span 5" }}>
+      <div className="card overview-card tickets-overview-card" style={{ gridRowEnd: "span 5" }}>
         <div className="card-title">Tickets Overview</div>
         <p></p>
         <div className="card-text">Add a vehicle first.</div>

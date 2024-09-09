@@ -288,7 +288,7 @@ body {
   position: sticky;
 }
 
-.overview-card {
+.card {
   border-radius: calc(var(--border-radius) * 2);
   padding: calc(var(--border-radius) * 2);
   margin: calc(var(--border-radius));
@@ -296,27 +296,31 @@ body {
   margin-top: 0;
   height: auto;
   box-shadow: 0px 0px var(--border-radius) gray;
+  line-height: var(--row-height);
 }
 
-.overview-card:hover {
+.card:hover {
   box-shadow: 0px 0px 5px black;
 }
 
+.card ul {
+  margin: 0;
+}
+
 .data-card {
-  border-radius: calc(var(--border-radius) * 2);
-  padding: calc(var(--border-radius) * 2);
-  margin: calc(var(--border-radius));
-  margin-left: 0;
-  margin-top: 0;
-  height: auto;
-  box-shadow: 0px 0px var(--border-radius) gray;
   break-inside: avoid-column;
   display: inline-block;
   box-sizing: border-box;
 }
 
-.data-card:hover {
-  box-shadow: 0px 0px 5px black;
+.card-title {
+  font-weight: bold;
+}
+
+.card-text {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .card-title {

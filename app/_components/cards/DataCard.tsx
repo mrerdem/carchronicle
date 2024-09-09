@@ -24,7 +24,7 @@ export function DataCard(
   };
 
   return (
-    <div key={key} className="data-card mileage-data-card" style={{ gridRowEnd: "span " + rowSpan }}>
+    <div key={key} className="card data-card mileage-data-card" style={{ gridRowEnd: "span " + rowSpan }}>
       <div>
         <div className="card-title-container">
           <div className="card-title">{title}</div>

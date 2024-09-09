@@ -10,7 +10,7 @@ export function MileageOverviewCard(data: VehicleData | null) {
       const sortedData = [...data.odometer_data].sort((a, b) => a.reading - b.reading);
 
       return (
-        <div className="overview-card mileage-overview-card" style={{ gridRowEnd: "span 14" }}>
+        <div className="card overview-card mileage-overview-card" style={{ gridRowEnd: "span 14" }}>
           <div className="card-title">Mileage Overview</div>
           <p></p>
           Average mileage:{" "}
@@ -37,7 +37,7 @@ export function MileageOverviewCard(data: VehicleData | null) {
       );
     } else {
       return (
-        <div className="overview-card mileage-overview-card" style={{ gridRowEnd: "span 5" }}>
+        <div className="card overview-card mileage-overview-card" style={{ gridRowEnd: "span 5" }}>
           <div className="card-title">Mileage Overview</div>
           <p></p>
           <div className="card-text">Add odometer reading to get an overview.</div>
@@ -46,7 +46,7 @@ export function MileageOverviewCard(data: VehicleData | null) {
     }
   } else {
     return (
-      <div className="overview-card mileage-overview-card" style={{ gridRowEnd: "span 5" }}>
+      <div className="card overview-card mileage-overview-card" style={{ gridRowEnd: "span 5" }}>
         <div className="card-title">Mileage Overview</div>
         <p></p>
         <div className="card-text">Add a vehicle first.</div>
