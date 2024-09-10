@@ -8,10 +8,10 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
   if (data != null) {
     if (data.maintenance_data?.length > 0) {
       const totalMaintenanceCost = data.maintenance_data.reduce((total, data) => {
-        return data.type === "Maintenance" ? total + Number(data.cost) : total;
+        return data.type === "maintenance" ? total + Number(data.cost) : total;
       }, 0);
       const totalRepairCost = data.maintenance_data.reduce((total, data) => {
-        return data.type === "Repair" ? total + Number(data.cost) : total;
+        return data.type === "repair" ? total + Number(data.cost) : total;
       }, 0);
       let totalServiceCost = totalMaintenanceCost + totalRepairCost;
 

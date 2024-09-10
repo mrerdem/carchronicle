@@ -145,8 +145,8 @@ export default function MaintenanceDataForm(props: DataEntryDialogProps) {
                   name: "type",
                 }}
               >
-                <MenuItem value="Maintenance">Maintenance</MenuItem>
-                <MenuItem value="Repair">Repair</MenuItem>
+                <MenuItem value="maintenance">Maintenance</MenuItem>
+                <MenuItem value="repair">Repair</MenuItem>
               </Select>
               <FormHelperText>{errors.typeError && "This field is required"}</FormHelperText>
             </FormControl>

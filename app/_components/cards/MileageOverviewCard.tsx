@@ -15,7 +15,7 @@ export function MileageOverviewCard(data: VehicleData | null) {
           <p></p>
           Average mileage:{" "}
           {data.avg_mileage > 0
-            ? data.avg_mileage.toFixed(2) + " " + userPrefs?.distance.toLowerCase() + "s/year"
+            ? data.avg_mileage.toFixed(2) + " " + userPrefs?.distance.toLowerCase() + "/year"
             : "Insufficient data"}
           <LineChart
             xAxis={[

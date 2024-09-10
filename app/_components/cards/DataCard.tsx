@@ -38,13 +38,15 @@ export function DataCard(
           <div key={index}>
             {capitalizeFirstLetter(field).replaceAll("_", " ")}:
             {" " +
-              (field.includes("cost") || field.includes("price")
+              (field.includes("type")
+                ? capitalizeFirstLetter(String(data[field as keyof typeof data]))
+                : field.includes("cost") || field.includes("price")
                 ? Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(
                     data[field as keyof typeof data]
                   )
                 : data[field as keyof typeof data]) +
-              (field.includes("reading") ? " " + userPrefs?.distance.toLowerCase() : "") +
-              (field.includes("amount") ? " " + userPrefs?.volume.toLowerCase() : "")}
+              (field.includes("reading") ? " " + userPrefs?.distance : "") +
+              (field.includes("amount") ? " " + userPrefs?.volume : "")}
           </div>
         ))}
       </div>

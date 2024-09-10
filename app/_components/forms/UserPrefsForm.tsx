@@ -18,6 +18,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
 import { CURRENCIES, DISTANCE_UNITS, VOLUME_UNITS } from "@/app/constants";
+import { capitalizeFirstLetter } from "../Utils";
 
 interface DataEntryDialogProps {
   open: boolean;
@@ -149,7 +150,7 @@ export default function UserPrefsForm(props: DataEntryDialogProps) {
               >
                 {VOLUME_UNITS.map((unit, index) => (
                   <MenuItem key={index} value={unit}>
-                    {unit}
+                    {capitalizeFirstLetter(unit)}
                   </MenuItem>
                 ))}
               </Select>
@@ -169,7 +170,7 @@ export default function UserPrefsForm(props: DataEntryDialogProps) {
               >
                 {DISTANCE_UNITS.map((unit, index) => (
                   <MenuItem key={index} value={unit}>
-                    {unit}
+                    {capitalizeFirstLetter(unit)}
                   </MenuItem>
                 ))}
               </Select>

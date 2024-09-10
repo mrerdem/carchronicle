@@ -13,6 +13,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { VEHICLE_TYPES } from "@/app/constants";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import { capitalizeFirstLetter } from "../Utils";
 
 const defaultFormData: VehicleData = {
   row: null,
@@ -178,7 +179,7 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
               >
                 {VEHICLE_TYPES.map((type, index) => (
                   <MenuItem key={index} value={type}>
-                    {type}
+                    {capitalizeFirstLetter(type)}
                   </MenuItem>
                 ))}
               </Select>
@@ -259,8 +260,8 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
                   name: "fuel_type",
                 }}
               >
-                <MenuItem value="Petrol">Petrol</MenuItem>
-                <MenuItem value="Diesel">Diesel</MenuItem>
+                <MenuItem value="petrol">Petrol</MenuItem>
+                <MenuItem value="diesel">Diesel</MenuItem>
               </Select>
             </FormControl>
             <DatePicker

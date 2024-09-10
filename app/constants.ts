@@ -1,4 +1,4 @@
-export const VEHICLE_TYPES = ["Car", "SUV", "Motorcycle", "Truck", "EV", "Van", "ATV"];
+export const VEHICLE_TYPES = ["car", "SUV", "motorcycle", "truck", "EV", "van", "ATV"];
 
 // Fields printed on overview cards
 export const VEHICLE_INFO_PRINTED = [
@@ -29,9 +29,9 @@ export const TICKET_INFO_PRINTED = ["date", "reason", "cost"];
 
 export const ACCIDENT_INFO_PRINTED = ["date", "info"];
 
-export const VOLUME_UNITS = ["Litre", "Gallon"];
+export const VOLUME_UNITS = ["litre", "gallon"];
 
-export const DISTANCE_UNITS = ["Kilometre", "Mile"];
+export const DISTANCE_UNITS = ["kilometre", "mile"];
 
 export const CURRENCIES = [
   "USD",
