@@ -35,18 +35,20 @@ export function DataCard(
       </div>
       <div>
         {fieldsWithData.map((field, index) => (
-          <div key={index}>
-            {capitalizeFirstLetter(field).replaceAll("_", " ")}:
-            {" " +
-              (field.includes("type")
+          <div key={index} style={{ display: "flex" }}>
+            <div>{capitalizeFirstLetter(field).replaceAll("_", " ")}:</div>
+            <div className="card-dotfill"></div>
+            <div>
+              {(field.includes("type")
                 ? capitalizeFirstLetter(String(data[field as keyof typeof data]))
                 : field.includes("cost") || field.includes("price")
                 ? Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(
                     data[field as keyof typeof data]
                   )
                 : data[field as keyof typeof data]) +
-              (field.includes("reading") ? " " + userPrefs?.distance : "") +
-              (field.includes("amount") ? " " + userPrefs?.volume : "")}
+                (field.includes("reading") ? " " + userPrefs?.distance : "") +
+                (field.includes("amount") ? " " + userPrefs?.volume : "")}
+            </div>
           </div>
         ))}
       </div>

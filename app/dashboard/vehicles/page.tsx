@@ -14,7 +14,6 @@ import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlic
 import VehicleDataForm from "@/app/_components/forms/VehicleDataForm";
 import { VehiclesOverviewCard } from "@/app/_components/cards/VehiclesOverviewCard";
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
-import { getRowSpan } from "@/app/_components/Utils";
 
 export default function Vehicles() {
   const [dataToEdit, setDataToEdit] = useState<VehicleData | null>(null);
@@ -66,7 +65,7 @@ export default function Vehicles() {
             onClose={closeVehicleForm}
             existingFormData={dataToEdit}
           ></VehicleDataForm>
-          {VehiclesOverviewCard(vehicleData, getRowSpan(VehiclesOverviewCard(vehicleData, null), 2))}
+          {VehiclesOverviewCard(vehicleData)}
           {vehicleData.map((data, index) =>
             DataCard(index + 1, "Vehicle info", data, VEHICLE_INFO_PRINTED, userPrefs, handleCardClick)
           )}

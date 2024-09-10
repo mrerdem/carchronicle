@@ -333,6 +333,12 @@ body {
   white-space: nowrap;
 }
 
+.card-dotfill {
+  flex: 1;
+  border-bottom: 1px dotted;
+  margin: 4px;
+}
+
 .form-title-container {
   display: flex;
   justify-content: space-between;

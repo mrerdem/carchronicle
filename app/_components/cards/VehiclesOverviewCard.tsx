@@ -1,6 +1,6 @@
 import { VEHICLE_TYPES } from "@/app/constants";
 
-export function VehiclesOverviewCard(data: VehicleData[], rowSpan: number | null) {
+export function VehiclesOverviewCard(data: VehicleData[]) {
   if (data?.length > 0) {
     const activeVehicles = data.filter((vehicle) => !vehicle.sell_date && !vehicle.sell_price);
     const soldVehicles = data.filter((vehicle) => vehicle.sell_date || vehicle.sell_price);
@@ -17,28 +17,37 @@ export function VehiclesOverviewCard(data: VehicleData[], rowSpan: number | null
       }, 0);
     });
 
+    const activeRowSpan = activeVehicleNumbers.reduce((sum, number) => {
+      return number ? sum + 1 : sum;
+    }, 0);
+
+    const soldRowSpan = soldVehicleNumbers.reduce((sum, number) => {
+      return number ? sum + 1 : sum;
+    }, 0);
+
+    const totalRowSpan =
+      2 + // Top and bottom margins
+      2 + // Title ("Vehicle Overview")
+      1 + // All vehicles
+      activeRowSpan +
+      (activeRowSpan > 0 ? 2 : 0) + // +2 for title and space
+      soldRowSpan +
+      (soldRowSpan > 0 ? 2 : 0); // +2 for title and space
+
     return (
       <div
         className="card overview-card vehicles-overview-card"
         style={{
-          gridRowEnd: "span " + rowSpan,
+          gridRowEnd: "span " + totalRowSpan,
         }}
       >
-        <div className="card-title" row-num="2">
-          Vehicles Overview
-        </div>
+        <div className="card-title">Vehicles Overview</div>
         <br />
         <div className="card-text">
           <div row-num="1">All vehicles ({data.length} total):</div>
           <ul>
             {activeVehicles.length > 0 && (
-              <div
-                row-num={
-                  activeVehicleNumbers.reduce((sum, number) => {
-                    return number ? sum + 1 : sum;
-                  }, 0) + 2
-                }
-              >
+              <div row-num={activeRowSpan}>
                 <br />
                 <li>Active vehicles ({activeVehicles.length} total):</li>
                 <ul>
@@ -54,13 +63,7 @@ export function VehiclesOverviewCard(data: VehicleData[], rowSpan: number | null
               </div>
             )}
             {soldVehicles.length > 0 && (
-              <div
-                row-num={
-                  soldVehicleNumbers.reduce((sum, number) => {
-                    return number ? sum + 1 : sum;
-                  }, 0) + 2
-                }
-              >
+              <div row-num={soldRowSpan}>
                 <br />
                 <li>Sold vehicles ({soldVehicles.length} total):</li>
                 <ul>
@@ -82,13 +85,9 @@ export function VehiclesOverviewCard(data: VehicleData[], rowSpan: number | null
   } else {
     return (
       <div className="card overview-card vehicles-overview-card" style={{ gridRowEnd: "span 5" }}>
-        <div className="card-title" row-num="2">
-          Vehicles Overview
-        </div>
+        <div className="card-title">Vehicles Overview</div>
         <br />
-        <div className="card-text" row-num="1">
-          Add a vehicle to get an overview.
-        </div>
+        <div className="card-text">Add a vehicle to get an overview.</div>
       </div>
     );
   }
