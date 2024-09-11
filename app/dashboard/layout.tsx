@@ -51,10 +51,12 @@ export default function DashboardLayout({
     }
   }, []);
 
-  // Show user prefs form if not set
+  // Show/hide user prefs form after prefs are fetched
   useEffect(() => {
     if (userPrefsFetchState === "idle" && !userPrefs) {
       dispatch(setUiData({ ...uiData, userPrefsFormVisibility: true }));
+    } else {
+      dispatch(setUiData({ ...uiData, userPrefsFormVisibility: false }));
     }
   }, [userPrefsFetchState]);
 

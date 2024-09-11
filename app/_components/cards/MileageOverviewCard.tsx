@@ -6,17 +6,27 @@ export function MileageOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
   if (data != null) {
-    if (data.odometer_data?.length > 0 && data.avg_mileage > 0) {
+    if (data.odometer_data?.length > 0) {
       const sortedData = [...data.odometer_data].sort((a, b) => a.reading - b.reading);
 
+      // Calculate row span for masonry layout
+      const rowSpan = 14 + (data.avg_mileage > 0 ? 2 : 0);
+
       return (
-        <div className="card overview-card mileage-overview-card" style={{ gridRowEnd: "span 14" }}>
+        <div className="card overview-card mileage-overview-card" style={{ gridRowEnd: "span " + rowSpan }}>
           <div className="card-title">Mileage Overview</div>
-          <p></p>
-          Average mileage:{" "}
-          {data.avg_mileage > 0
-            ? data.avg_mileage.toFixed(2) + " " + userPrefs?.distance.toLowerCase() + "/year"
-            : "Insufficient data"}
+          <br />
+          {data.avg_mileage > 0 ? (
+            <>
+              Average mileage:{" "}
+              {data.avg_mileage > 0
+                ? data.avg_mileage.toFixed(2) + " " + userPrefs?.distance + "/year"
+                : "Insufficient data"}
+              <br />
+              <br />
+            </>
+          ) : null}
+          Odometer readings:
           <LineChart
             xAxis={[
               {
