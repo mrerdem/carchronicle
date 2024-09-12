@@ -7,10 +7,14 @@ import dayjs from "dayjs";
 export function ConsumptionOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
-  const rowSpan = { gridRowEnd: data?.avg_consumption > 0 ? "span 27" : "span 25" };
+  const rowSpan = {
+    gridRowEnd: data?.avg_consumption > 0 ? "span 27" : "span 25",
+  };
 
   if (data) {
     if (data.refuel_data?.length > 0) {
+      var style = getComputedStyle(document.body);
+
       // Oder data by date
       const orderedData: RefuelData[] = JSON.parse(JSON.stringify(data.refuel_data));
       orderedData.sort((a, b) => dayjs(a.date).diff(dayjs(b.date)));
@@ -55,14 +59,18 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
                   data: summedData.map((obj) => obj.amount),
                 },
               ]}
+              colors={[style.getPropertyValue("--color-7")]}
               height={200}
               margin={{ top: 20 }}
               grid={{ vertical: false, horizontal: true }}
+              sx={{ "&&": { touchAction: "auto" } }}
             />
             <div>
               Gas price (
-              {Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).formatToParts()[0]
-                .value +
+              {Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: userPrefs.currency,
+              }).formatToParts()[0].value +
                 "/" +
                 userPrefs.volume.toLowerCase()}
               ):{" "}
@@ -79,9 +87,11 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
                   data: summedData.map((obj) => obj.cost / obj.amount),
                 },
               ]}
+              colors={[style.getPropertyValue("--color-7")]}
               height={200}
               margin={{ top: 20 }}
               grid={{ vertical: false, horizontal: true }}
+              sx={{ "&&": { touchAction: "auto" } }}
             />
           </div>
         </>

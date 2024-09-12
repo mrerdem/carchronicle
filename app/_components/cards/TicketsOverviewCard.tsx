@@ -6,6 +6,8 @@ export function TicketsOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
   if (data != null) {
+    var style = getComputedStyle(document.body);
+
     if (data.ticket_data?.length > 0) {
       type TicketCost = { year: number; cost: number };
 
@@ -38,7 +40,10 @@ export function TicketsOverviewCard(data: VehicleData | null) {
           <div className="card-title">Tickets Overview</div>
           <p></p>
           Total cost:{" "}
-          {Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(totalCost)}
+          {Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: userPrefs.currency,
+          }).format(totalCost)}
           <br />
           {yearlyCosts && (
             <BarChart
@@ -49,9 +54,11 @@ export function TicketsOverviewCard(data: VehicleData | null) {
                 },
               ]}
               series={[{ data: yearlyCosts.map((obj: TicketCost) => obj.cost) }]}
+              colors={[style.getPropertyValue("--color-7")]}
               height={200}
               margin={{ top: 20 }}
               grid={{ vertical: false, horizontal: true }}
+              sx={{ "&&": { touchAction: "auto" } }}
             />
           )}
         </div>

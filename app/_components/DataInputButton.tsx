@@ -5,10 +5,17 @@ type DataInputButtonProps = {
   clickAction: () => void;
 };
 
-export function DataInputButton({ name: Name, clickAction: ClickAction }: DataInputButtonProps) {
+export function DataInputButton({
+  name: Name,
+  clickAction: ClickAction,
+}: DataInputButtonProps) {
   return (
-    <ButtonBase className="add-data-button" onClick={() => ClickAction()}>
-      <b>Add {Name}</b>
-    </ButtonBase>
+    <button className="button add-data-button" onClick={() => ClickAction()}>
+      <b>
+        Add
+        <br />
+        {Name}
+      </b>
+    </button>
   );
 }

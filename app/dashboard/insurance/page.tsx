@@ -7,7 +7,10 @@ import { INSURANCE_INFO_PRINTED } from "@/app/constants";
 import { InsuranceOverviewCard } from "@/app/_components/cards/InsuranceOverviewCard";
 import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import InsuranceDataForm from "@/app/_components/forms/InsuranceDataForm";
-import { selectActiveVehicleData, updateActiveVehicleData } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
+import {
+  selectActiveVehicleData,
+  updateActiveVehicleData,
+} from "@/app/_redux/features/vehicleData/vehicleDataSlice";
 import { createClient } from "@/app/_supabase/client";
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
@@ -28,20 +31,32 @@ export default function Insurance() {
   };
 
   const handleCardClick = (row: number) => {
-    setDataToEdit(activeVehicleData.insurance_data.find((data) => data.row === row));
+    setDataToEdit(
+      activeVehicleData.insurance_data.find((data) => data.row === row)
+    );
     openForm();
   };
 
-  const handleFormSubmit = async (task: string, user_id: string, formData: InsuranceData) => {
+  const handleFormSubmit = async (
+    task: string,
+    user_id: string,
+    formData: InsuranceData
+  ) => {
     const supabase = createClient();
     if (task === "add") {
       try {
         const { data, error } = await supabase.rpc("add_insurance_data", {
-          data: { ...formData, vehicle_row: activeVehicleData.row, user_id: user_id },
+          data: {
+            ...formData,
+            vehicle_row: activeVehicleData.row,
+            user_id: user_id,
+          },
         });
         if (!error) {
           if (data != null) {
-            const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
+            const updatedVehicleData: VehicleData = JSON.parse(
+              JSON.stringify(activeVehicleData)
+            );
             if (updatedVehicleData.insurance_data) {
               updatedVehicleData.insurance_data.push({
                 ...formData,
@@ -67,11 +82,17 @@ export default function Insurance() {
     } else if (task === "update") {
       try {
         const { data, error } = await supabase.rpc("update_insurance_data", {
-          data: { ...formData, user_id: user_id, vehicle_row: activeVehicleData.row },
+          data: {
+            ...formData,
+            user_id: user_id,
+            vehicle_row: activeVehicleData.row,
+          },
         });
         if (!error) {
           if (data != null) {
-            const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
+            const updatedVehicleData: VehicleData = JSON.parse(
+              JSON.stringify(activeVehicleData)
+            );
             if (updatedVehicleData.insurance_data) {
               const indexToUpdate = updatedVehicleData.insurance_data.findIndex(
                 (insurance) => insurance.row === data.row
@@ -92,11 +113,17 @@ export default function Insurance() {
     } else if (task === "delete") {
       try {
         const { data, error } = await supabase.rpc("delete_insurance_data", {
-          data: { ...formData, user_id: user_id, vehicle_row: activeVehicleData.row },
+          data: {
+            ...formData,
+            user_id: user_id,
+            vehicle_row: activeVehicleData.row,
+          },
         });
         if (!error) {
           if (data != null) {
-            const updatedVehicleData: VehicleData = JSON.parse(JSON.stringify(activeVehicleData));
+            const updatedVehicleData: VehicleData = JSON.parse(
+              JSON.stringify(activeVehicleData)
+            );
             if (updatedVehicleData.insurance_data) {
               const indexToDelete = updatedVehicleData.insurance_data.findIndex(
                 (insurance) => insurance.row === data.row
@@ -122,7 +149,10 @@ export default function Insurance() {
       {activeVehicleData && (
         <div className="options-container">
           <VehicleSelector />
-          <DataInputButton name={"insurance info"} clickAction={openForm}></DataInputButton>
+          <DataInputButton
+            name={"insurance"}
+            clickAction={openForm}
+          ></DataInputButton>
         </div>
       )}
       <div className="card-container">
@@ -137,7 +167,14 @@ export default function Insurance() {
         {activeVehicleData?.insurance_data && (
           <>
             {activeVehicleData.insurance_data.map((data, index) =>
-              DataCard(index + 1, "Insurance info", data, INSURANCE_INFO_PRINTED, userPrefs, handleCardClick)
+              DataCard(
+                index + 1,
+                "Insurance",
+                data,
+                INSURANCE_INFO_PRINTED,
+                userPrefs,
+                handleCardClick
+              )
             )}
           </>
         )}

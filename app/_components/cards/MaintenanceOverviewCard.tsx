@@ -6,6 +6,8 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
   if (data != null) {
+    var style = getComputedStyle(document.body);
+
     if (data.maintenance_data?.length > 0) {
       const totalMaintenanceCost = data.maintenance_data.reduce((total, data) => {
         return data.type === "maintenance" ? total + Number(data.cost) : total;
@@ -24,7 +26,10 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
           <div className="card-title">Maintenance/Repair Overview</div>
           <p></p>
           Total service cost:{" "}
-          {Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(totalServiceCost)}
+          {Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: userPrefs.currency,
+          }).format(totalServiceCost)}
           <br />
           {totalServiceCost > 0 && (
             <PieChart
@@ -32,18 +37,18 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
                 {
                   data: [
                     {
+                      id: 0,
                       value: totalMaintenanceCost,
-                      color: "#6E7DAB",
+                      color: style.getPropertyValue("--color-7"),
                       label: "Total\nmaintenance\ncost",
                     },
                     {
+                      id: 1,
                       value: totalRepairCost,
-                      color: "#82DDF0",
+                      color: style.getPropertyValue("--color-8"),
                       label: "Total\nrepair\ncost",
                     },
                   ],
-                  highlightScope: { faded: "global", highlighted: "item" },
-                  faded: { innerRadius: 0, additionalRadius: 0, color: "gray" },
                 },
               ]}
               height={200}
@@ -51,6 +56,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
                 top: 20,
                 bottom: 20,
               }}
+              sx={{ "&&": { touchAction: "auto" } }}
             />
           )}
         </div>

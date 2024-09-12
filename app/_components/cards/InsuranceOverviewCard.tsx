@@ -6,6 +6,8 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
   if (data != null) {
+    var style = getComputedStyle(document.body);
+
     if (data.insurance_data?.length > 0) {
       type insuranceCost = { year: number; cost: number };
       let yearlyCosts: insuranceCost[] = data.insurance_data.map((insuranceData) => ({
@@ -24,7 +26,10 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
           <div className="card-title">Insurance Overview</div>
           <p></p>
           Total cost:{" "}
-          {Intl.NumberFormat("en-US", { style: "currency", currency: userPrefs.currency }).format(totalCost)}
+          {Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: userPrefs.currency,
+          }).format(totalCost)}
           <br />
           <BarChart
             xAxis={[
@@ -38,9 +43,11 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
                 data: yearlyCosts.map((obj) => obj.cost),
               },
             ]}
+            colors={[style.getPropertyValue("--color-7")]}
             height={200}
             margin={{ top: 20 }}
             grid={{ vertical: false, horizontal: true }}
+            sx={{ "&&": { touchAction: "auto" } }}
           />
         </div>
       );

@@ -3,6 +3,8 @@ import { BarChart } from "@mui/x-charts";
 export function AccidentsOverviewCard(data: VehicleData | null) {
   if (data != null) {
     if (data.accident_data?.length > 0) {
+      var style = getComputedStyle(document.body);
+
       type accidentYear = { year: number; count: number };
       let accidentYears: accidentYear[] = data.accident_data.map((accidentData, index) => ({
         year: Number(accidentData.date.split("-")[0]),
@@ -41,10 +43,12 @@ export function AccidentsOverviewCard(data: VehicleData | null) {
                 scaleType: "band",
               },
             ]}
+            colors={[style.getPropertyValue("--color-7")]}
             series={[{ data: yearlyCounts.map((obj) => obj.count) }]}
             height={200}
             margin={{ top: 20 }}
             grid={{ vertical: false, horizontal: true }}
+            sx={{ "&&": { touchAction: "auto" } }}
           />
         </div>
       );
