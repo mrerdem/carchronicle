@@ -40,13 +40,13 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
                 <>
                   Average consumption:{" "}
                   {data.avg_consumption > 0
-                    ? data.avg_consumption.toFixed(2) + " " + userPrefs?.volume.toLowerCase() + "/year"
+                    ? data.avg_consumption.toFixed(2) + " " + userPrefs?.volume + "/year"
                     : "N/A"}
                 </>
               ) : null}
             </div>
             <p></p>
-            <div>Refuels:</div>
+            <div>Refuels ({userPrefs.volume}):</div>
             <BarChart
               xAxis={[
                 {
@@ -72,14 +72,14 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
                 currency: userPrefs.currency,
               }).formatToParts()[0].value +
                 "/" +
-                userPrefs.volume.toLowerCase()}
+                userPrefs.volume}
               ):{" "}
             </div>
             <LineChart
               xAxis={[
                 {
                   data: summedData.map((obj) => obj.date),
-                  scaleType: "band",
+                  scaleType: "point",
                 },
               ]}
               series={[

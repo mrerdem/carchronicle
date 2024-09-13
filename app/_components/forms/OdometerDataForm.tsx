@@ -137,7 +137,7 @@ export default function OdometerDataForm(props: DataEntryDialogProps) {
             <TextField
               required
               id="standard-basic"
-              label={"Reading (" + userPrefs?.distance.toLowerCase() + ")"}
+              label={"Reading (" + userPrefs?.distance + ")"}
               variant="outlined"
               name="reading"
               value={formData?.reading ? formData.reading : ""}

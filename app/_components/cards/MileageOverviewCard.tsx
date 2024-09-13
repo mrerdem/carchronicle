@@ -27,7 +27,7 @@ export function MileageOverviewCard(data: VehicleData | null) {
               <br />
             </>
           ) : null}
-          Odometer readings:
+          Odometer readings ({userPrefs.distance}):
           <LineChart
             xAxis={[
               {
