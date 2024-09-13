@@ -6,7 +6,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
   if (data != null) {
-    var style = getComputedStyle(document.body);
+    const style = getComputedStyle(document.body);
 
     if (data.maintenance_data?.length > 0) {
       const totalMaintenanceCost = data.maintenance_data.reduce((total, data) => {

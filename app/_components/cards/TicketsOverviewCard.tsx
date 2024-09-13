@@ -6,7 +6,7 @@ export function TicketsOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
   if (data != null) {
-    var style = getComputedStyle(document.body);
+    const style = getComputedStyle(document.body);
 
     if (data.ticket_data?.length > 0) {
       type TicketCost = { year: number; cost: number };

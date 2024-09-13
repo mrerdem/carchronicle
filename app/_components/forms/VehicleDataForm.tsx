@@ -7,13 +7,14 @@ import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { FormHelperText, IconButton, TextField } from "@mui/material";
+import { FormHelperText, IconButton, TextField, ThemeProvider } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { VEHICLE_TYPES } from "@/app/constants";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { capitalizeFirstLetter } from "../Utils";
+import { FormTheme } from "../Themes";
 
 const defaultFormData: VehicleData = {
   row: null,
@@ -144,179 +145,169 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Dialog open={open} onClose={handleClose}>
-        <div className="form-title-container">
-          <DialogTitle>Vehicle details</DialogTitle>
-          <IconButton onClick={handleReset}>
-            <RestartAltIcon />
-          </IconButton>
-        </div>
-        <DialogContent>
-          <Box
-            component="form"
-            noValidate
-            sx={{
-              "& .MuiFormControl-root": {
-                mb: 1,
-              },
-              paddingTop: 1,
-            }}
-            autoComplete="off"
-            display={"flex"}
-            flexDirection={"column"}
-          >
-            <FormControl error={errors.typeError} required>
-              <InputLabel htmlFor="max-width">Vehicle type</InputLabel>
-              <Select
+      <ThemeProvider theme={FormTheme}>
+        <Dialog open={open} onClose={handleClose}>
+          <div className="form-title-container">
+            <DialogTitle>Vehicle details</DialogTitle>
+            <IconButton onClick={handleReset}>
+              <RestartAltIcon />
+            </IconButton>
+          </div>
+          <DialogContent>
+            <Box component="form" noValidate autoComplete="off" display={"flex"} flexDirection={"column"}>
+              <FormControl error={errors.typeError} required>
+                <InputLabel htmlFor="max-width">Vehicle type</InputLabel>
+                <Select
+                  required
+                  label="Vehicle type"
+                  value={formData.type ? formData.type : ""}
+                  onChange={handleSelectInputChange}
+                  inputProps={{
+                    name: "type",
+                    error: errors.typeError,
+                  }}
+                >
+                  {VEHICLE_TYPES.map((type, index) => (
+                    <MenuItem key={index} value={type}>
+                      {capitalizeFirstLetter(type)}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>{errors.typeError && "This field is required"}</FormHelperText>
+              </FormControl>
+              <TextField
                 required
-                label="Vehicle type"
-                value={formData.type ? formData.type : ""}
-                onChange={handleSelectInputChange}
-                inputProps={{
-                  name: "type",
-                  error: errors.typeError,
-                }}
-              >
-                {VEHICLE_TYPES.map((type, index) => (
-                  <MenuItem key={index} value={type}>
-                    {capitalizeFirstLetter(type)}
-                  </MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>{errors.typeError && "This field is required"}</FormHelperText>
-            </FormControl>
-            <TextField
-              required
-              id="standard-basic"
-              label="Make"
-              value={formData.make ? formData.make : ""}
-              variant="outlined"
-              name="make"
-              onChange={handleTextInputChange}
-              error={errors.makeError}
-              helperText={errors.makeError && "This field is required"}
-            />
-            <TextField
-              required
-              id="standard-basic"
-              label="Model"
-              value={formData.model ? formData.model : ""}
-              variant="outlined"
-              name="model"
-              onChange={handleTextInputChange}
-              error={errors.modelError}
-              helperText={errors.modelError && "This field is required"}
-            />
-            <TextField
-              id="standard-basic"
-              label="Trim"
-              value={formData.trim ? formData.trim : ""}
-              variant="outlined"
-              name="trim"
-              onChange={handleTextInputChange}
-            />
-            <TextField
-              id="standard-basic"
-              label="Model year"
-              variant="outlined"
-              name="year"
-              value={formData.year ? formData.year : ""}
-              type="number"
-              inputMode="numeric"
-              onChange={handleNumberInputChange}
-            />
-            <TextField
-              id="standard-basic"
-              label="Color"
-              value={formData.color ? formData.color : ""}
-              variant="outlined"
-              name="color"
-              onChange={handleTextInputChange}
-            />
-            <TextField
-              id="standard-basic"
-              label="Plate"
-              value={formData.plate ? formData.plate : ""}
-              variant="outlined"
-              name="plate"
-              onChange={handleTextInputChange}
-            />
-            <TextField
-              id="standard-basic"
-              label="VIN"
-              value={formData.vin ? formData.vin : ""}
-              variant="outlined"
-              name="vin"
-              onChange={handleTextInputChange}
-            />
-            <FormControl>
-              <InputLabel id="fuel-type-label">Fuel type</InputLabel>
-              <Select
-                labelId="fuel-type-label"
-                label="Fuel type"
-                value={formData.fuel_type ? formData.fuel_type : ""}
-                onChange={handleSelectInputChange}
-                inputProps={{
-                  name: "fuel_type",
-                }}
-              >
-                <MenuItem value="petrol">Petrol</MenuItem>
-                <MenuItem value="diesel">Diesel</MenuItem>
-              </Select>
-            </FormControl>
-            <DatePicker
-              label="Purchase date"
-              onChange={(newValue) => handleSelectDateChange("purchase_date", newValue)}
-              value={formData.purchase_date ? dayjs(formData.purchase_date) : null}
-            />
-            <TextField
-              id="standard-basic"
-              label="Purchase price"
-              value={formData.purchase_price ? formData.purchase_price : ""}
-              variant="outlined"
-              name="purchase_price"
-              type="number"
-              inputMode="numeric"
-              onChange={handleNumberInputChange}
-            />
-            <DatePicker
-              label="Sell date"
-              onChange={(newValue) => handleSelectDateChange("sell_date", newValue)}
-              value={formData.sell_date ? dayjs(formData.sell_date) : null}
-            />
-            <TextField
-              id="standard-basic"
-              label="Sell price"
-              value={formData.sell_price ? formData.sell_price : ""}
-              variant="outlined"
-              name="sell_price"
-              type="number"
-              inputMode="numeric"
-              onChange={handleNumberInputChange}
-            />
-          </Box>
-        </DialogContent>
-        <div className="form-button-container">
-          {existingFormData && (
-            <button className="button delete-button" onClick={handleDelete}>
-              Delete
+                id="standard-basic"
+                label="Make"
+                value={formData.make ? formData.make : ""}
+                variant="outlined"
+                name="make"
+                onChange={handleTextInputChange}
+                error={errors.makeError}
+                helperText={errors.makeError && "This field is required"}
+              />
+              <TextField
+                required
+                id="standard-basic"
+                label="Model"
+                value={formData.model ? formData.model : ""}
+                variant="outlined"
+                name="model"
+                onChange={handleTextInputChange}
+                error={errors.modelError}
+                helperText={errors.modelError && "This field is required"}
+              />
+              <TextField
+                id="standard-basic"
+                label="Trim"
+                value={formData.trim ? formData.trim : ""}
+                variant="outlined"
+                name="trim"
+                onChange={handleTextInputChange}
+              />
+              <TextField
+                id="standard-basic"
+                label="Model year"
+                variant="outlined"
+                name="year"
+                value={formData.year ? formData.year : ""}
+                type="number"
+                inputMode="numeric"
+                onChange={handleNumberInputChange}
+              />
+              <TextField
+                id="standard-basic"
+                label="Color"
+                value={formData.color ? formData.color : ""}
+                variant="outlined"
+                name="color"
+                onChange={handleTextInputChange}
+              />
+              <TextField
+                id="standard-basic"
+                label="Plate"
+                value={formData.plate ? formData.plate : ""}
+                variant="outlined"
+                name="plate"
+                onChange={handleTextInputChange}
+              />
+              <TextField
+                id="standard-basic"
+                label="VIN"
+                value={formData.vin ? formData.vin : ""}
+                variant="outlined"
+                name="vin"
+                onChange={handleTextInputChange}
+              />
+              <FormControl>
+                <InputLabel id="fuel-type-label">Fuel type</InputLabel>
+                <Select
+                  labelId="fuel-type-label"
+                  label="Fuel type"
+                  value={formData.fuel_type ? formData.fuel_type : ""}
+                  onChange={handleSelectInputChange}
+                  inputProps={{
+                    name: "fuel_type",
+                  }}
+                >
+                  <MenuItem value="petrol">Petrol</MenuItem>
+                  <MenuItem value="diesel">Diesel</MenuItem>
+                </Select>
+              </FormControl>
+              <DatePicker
+                label="Purchase date"
+                onChange={(newValue) => handleSelectDateChange("purchase_date", newValue)}
+                value={formData.purchase_date ? dayjs(formData.purchase_date) : null}
+              />
+              <TextField
+                id="standard-basic"
+                label="Purchase price"
+                value={formData.purchase_price ? formData.purchase_price : ""}
+                variant="outlined"
+                name="purchase_price"
+                type="number"
+                inputMode="numeric"
+                onChange={handleNumberInputChange}
+              />
+              <DatePicker
+                label="Sell date"
+                onChange={(newValue) => handleSelectDateChange("sell_date", newValue)}
+                value={formData.sell_date ? dayjs(formData.sell_date) : null}
+              />
+              <TextField
+                id="standard-basic"
+                label="Sell price"
+                value={formData.sell_price ? formData.sell_price : ""}
+                variant="outlined"
+                name="sell_price"
+                type="number"
+                inputMode="numeric"
+                onChange={handleNumberInputChange}
+              />
+            </Box>
+          </DialogContent>
+          <div className="form-button-container">
+            {existingFormData && (
+              <button className="button delete-button" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
+            <button className="button close-button" onClick={handleClose}>
+              Cancel
             </button>
-          )}
-          <button className="button close-button" onClick={handleClose}>
-            Cancel
-          </button>
-          {!existingFormData && (
-            <button className="button add-button" onClick={handleAdd}>
-              Add
-            </button>
-          )}
-          {existingFormData && (
-            <button className="button update-button" onClick={handleUpdate}>
-              Update
-            </button>
-          )}
-        </div>
-      </Dialog>
+            {!existingFormData && (
+              <button className="button add-button" onClick={handleAdd}>
+                Add
+              </button>
+            )}
+            {existingFormData && (
+              <button className="button update-button" onClick={handleUpdate}>
+                Update
+              </button>
+            )}
+          </div>
+        </Dialog>
+      </ThemeProvider>
     </LocalizationProvider>
   );
 }

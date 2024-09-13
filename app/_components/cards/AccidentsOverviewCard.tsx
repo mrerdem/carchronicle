@@ -3,7 +3,7 @@ import { BarChart } from "@mui/x-charts";
 export function AccidentsOverviewCard(data: VehicleData | null) {
   if (data != null) {
     if (data.accident_data?.length > 0) {
-      var style = getComputedStyle(document.body);
+      const style = getComputedStyle(document.body);
 
       type accidentYear = { year: number; count: number };
       let accidentYears: accidentYear[] = data.accident_data.map((accidentData, index) => ({

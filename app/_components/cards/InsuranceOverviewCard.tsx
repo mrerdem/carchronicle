@@ -6,7 +6,7 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
   if (data != null) {
-    var style = getComputedStyle(document.body);
+    const style = getComputedStyle(document.body);
 
     if (data.insurance_data?.length > 0) {
       type insuranceCost = { year: number; cost: number };

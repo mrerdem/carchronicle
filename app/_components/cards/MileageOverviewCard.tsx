@@ -7,7 +7,7 @@ export function MileageOverviewCard(data: VehicleData | null) {
 
   if (data != null) {
     if (data.odometer_data?.length > 0) {
-      var style = getComputedStyle(document.body);
+      const style = getComputedStyle(document.body);
       const sortedData = [...data.odometer_data].sort((a, b) => a.reading - b.reading);
 
       // Calculate row span for masonry layout
