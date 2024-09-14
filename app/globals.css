@@ -419,18 +419,6 @@ body {
   background-color: var(--color-3);
 }
 
-.MuiDialog-root {
-  border-radius: calc(var(--border-radius) * 2);
-}
-
-.MuiPaper-root {
-  border-radius: calc(var(--border-radius) * 2);
-}
-
-.MuiInputBase-root {
-  border-radius: calc(var(--border-radius));
-}
-
 @media (max-width: 768px) {
   /* Change max-width value in header.tsx together */
 

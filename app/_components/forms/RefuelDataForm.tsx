@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { IconButton, TextField } from "@mui/material";
+import { IconButton, TextField, ThemeProvider } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
+import { FormTheme } from "../Themes";
 
 interface DataEntryDialogProps {
   open: boolean;
@@ -104,88 +105,78 @@ export default function RefuelDataForm(props: DataEntryDialogProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Dialog open={open} onClose={handleClose}>
-        <div className="form-title-container">
-          <DialogTitle>Refuel details</DialogTitle>
-          <IconButton onClick={handleReset}>
-            <RestartAltIcon />
-          </IconButton>
-        </div>
-        <DialogContent>
-          <Box
-            noValidate
-            component="form"
-            sx={{
-              "& .MuiFormControl-root": {
-                mb: 1,
-              },
-              paddingTop: 1,
-            }}
-            autoComplete="off"
-            display={"flex"}
-            flexDirection={"column"}
-          >
-            <DatePicker
-              label="Date"
-              value={formData?.date ? dayjs(formData.date) : dayjs(defaultFormData.date)}
-              onChange={(newValue) => handleSelectDateChange("date", newValue)}
-              slotProps={{
-                textField: {
-                  required: true,
-                  error: errors.dateError,
-                  helperText: errors.dateError && "This field is required",
-                },
-              }}
-            />
-            <TextField
-              required
-              id="standard-basic"
-              label={"Amount (" + userPrefs?.volume + ")"}
-              variant="outlined"
-              name="amount"
-              value={formData?.amount ? formData.amount : ""}
-              type="number"
-              inputMode="numeric"
-              onChange={handleNumberInputChange}
-              error={errors.amountError}
-              helperText={errors.amountError && "This field is required"}
-            />
-            <TextField
-              required
-              id="standard-basic"
-              label={"Cost (" + userPrefs?.currency + ")"}
-              variant="outlined"
-              name="cost"
-              value={formData?.cost ? formData.cost : ""}
-              type="number"
-              inputMode="numeric"
-              onChange={handleNumberInputChange}
-              error={errors.costError}
-              helperText={errors.costError && "This field is required"}
-            />
-          </Box>
-        </DialogContent>
-        <div className="form-button-container">
-          {existingFormData && (
-            <button className="button delete-button" onClick={handleDelete}>
-              Delete
+      <ThemeProvider theme={FormTheme}>
+        <Dialog open={open} onClose={handleClose}>
+          <div className="form-title-container">
+            <DialogTitle>Refuel details</DialogTitle>
+            <IconButton onClick={handleReset}>
+              <RestartAltIcon />
+            </IconButton>
+          </div>
+          <DialogContent>
+            <Box noValidate component="form" autoComplete="off" display={"flex"} flexDirection={"column"}>
+              <DatePicker
+                label="Date"
+                value={formData?.date ? dayjs(formData.date) : dayjs(defaultFormData.date)}
+                onChange={(newValue) => handleSelectDateChange("date", newValue)}
+                slotProps={{
+                  textField: {
+                    required: true,
+                    error: errors.dateError,
+                    helperText: errors.dateError && "This field is required",
+                  },
+                }}
+              />
+              <TextField
+                required
+                id="standard-basic"
+                label={"Amount (" + userPrefs?.volume + ")"}
+                variant="outlined"
+                name="amount"
+                value={formData?.amount ? formData.amount : ""}
+                type="number"
+                inputMode="numeric"
+                onChange={handleNumberInputChange}
+                error={errors.amountError}
+                helperText={errors.amountError && "This field is required"}
+              />
+              <TextField
+                required
+                id="standard-basic"
+                label={"Cost (" + userPrefs?.currency + ")"}
+                variant="outlined"
+                name="cost"
+                value={formData?.cost ? formData.cost : ""}
+                type="number"
+                inputMode="numeric"
+                onChange={handleNumberInputChange}
+                error={errors.costError}
+                helperText={errors.costError && "This field is required"}
+              />
+            </Box>
+          </DialogContent>
+          <div className="form-button-container">
+            {existingFormData && (
+              <button className="button delete-button" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
+            <button className="button close-button" onClick={handleClose}>
+              Cancel
             </button>
-          )}
-          <button className="button close-button" onClick={handleClose}>
-            Cancel
-          </button>
-          {!existingFormData && (
-            <button className="button add-button" onClick={handleAdd}>
-              Add
-            </button>
-          )}
-          {existingFormData && (
-            <button className="button update-button" onClick={handleUpdate}>
-              Update
-            </button>
-          )}
-        </div>
-      </Dialog>
+            {!existingFormData && (
+              <button className="button add-button" onClick={handleAdd}>
+                Add
+              </button>
+            )}
+            {existingFormData && (
+              <button className="button update-button" onClick={handleUpdate}>
+                Update
+              </button>
+            )}
+          </div>
+        </Dialog>
+      </ThemeProvider>
     </LocalizationProvider>
   );
 }

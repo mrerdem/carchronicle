@@ -4,13 +4,14 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
-import { FormHelperText, IconButton, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { FormHelperText, IconButton, InputLabel, MenuItem, Select, TextField, ThemeProvider } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
+import { FormTheme } from "../Themes";
 
 interface DataEntryDialogProps {
   open: boolean;
@@ -114,104 +115,94 @@ export default function MaintenanceDataForm(props: DataEntryDialogProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Dialog open={open} onClose={handleClose}>
-        <div className="form-title-container">
-          <DialogTitle>Maintenance/repair details</DialogTitle>
-          <IconButton onClick={handleReset}>
-            <RestartAltIcon />
-          </IconButton>
-        </div>
-        <DialogContent>
-          <Box
-            noValidate
-            component="form"
-            sx={{
-              "& .MuiFormControl-root": {
-                mb: 1,
-              },
-              paddingTop: 1,
-            }}
-            autoComplete="off"
-            display={"flex"}
-            flexDirection={"column"}
-          >
-            <FormControl error={errors.typeError} required>
-              <InputLabel>Type</InputLabel>
-              <Select
-                label="Type"
-                value={formData?.type ? formData.type : ""}
+      <ThemeProvider theme={FormTheme}>
+        <Dialog open={open} onClose={handleClose}>
+          <div className="form-title-container">
+            <DialogTitle>Maintenance/repair details</DialogTitle>
+            <IconButton onClick={handleReset}>
+              <RestartAltIcon />
+            </IconButton>
+          </div>
+          <DialogContent>
+            <Box noValidate component="form" autoComplete="off" display={"flex"} flexDirection={"column"}>
+              <FormControl error={errors.typeError} required>
+                <InputLabel>Type</InputLabel>
+                <Select
+                  label="Type"
+                  value={formData?.type ? formData.type : ""}
+                  onChange={handleTextInputChange}
+                  inputProps={{
+                    name: "type",
+                  }}
+                >
+                  <MenuItem value="maintenance">Maintenance</MenuItem>
+                  <MenuItem value="repair">Repair</MenuItem>
+                </Select>
+                <FormHelperText>{errors.typeError && "This field is required"}</FormHelperText>
+              </FormControl>
+              <TextField
+                id="standard-basic"
+                label="Provider"
+                variant="outlined"
+                name="provider"
+                value={formData?.provider ? formData.provider : ""}
                 onChange={handleTextInputChange}
-                inputProps={{
-                  name: "type",
-                }}
-              >
-                <MenuItem value="maintenance">Maintenance</MenuItem>
-                <MenuItem value="repair">Repair</MenuItem>
-              </Select>
-              <FormHelperText>{errors.typeError && "This field is required"}</FormHelperText>
-            </FormControl>
-            <TextField
-              id="standard-basic"
-              label="Provider"
-              variant="outlined"
-              name="provider"
-              value={formData?.provider ? formData.provider : ""}
-              onChange={handleTextInputChange}
-            />
-            <DatePicker
-              label="Start date"
-              value={formData?.start_date ? dayjs(formData.start_date) : dayjs(defaultFormData.start_date)}
-              onChange={(newValue) => handleSelectDateChange("start_date", newValue)}
-            />
-            <DatePicker
-              label="End date"
-              value={formData?.end_date ? dayjs(formData.end_date) : dayjs(defaultFormData.end_date)}
-              onChange={(newValue) => handleSelectDateChange("end_date", newValue)}
-            />
-            <TextField
-              id="standard-basic"
-              label="Work"
-              variant="outlined"
-              name="work"
-              value={formData?.work ? formData.work : ""}
-              onChange={handleTextInputChange}
-            />
-            <TextField
-              required
-              id="standard-basic"
-              label={"Cost (" + userPrefs?.currency + ")"}
-              variant="outlined"
-              name="cost"
-              value={formData?.cost ? formData.cost : ""}
-              type="number"
-              inputMode="numeric"
-              onChange={handleNumberInputChange}
-              error={errors.costError}
-              helperText={errors.costError && "This field is required"}
-            />
-          </Box>
-        </DialogContent>
-        <div className="form-button-container">
-          {existingFormData && (
-            <button className="button delete-button" onClick={handleDelete}>
-              Delete
+              />
+              <DatePicker
+                label="Start date"
+                value={formData?.start_date ? dayjs(formData.start_date) : dayjs(defaultFormData.start_date)}
+                onChange={(newValue) => handleSelectDateChange("start_date", newValue)}
+              />
+              <DatePicker
+                label="End date"
+                value={formData?.end_date ? dayjs(formData.end_date) : dayjs(defaultFormData.end_date)}
+                onChange={(newValue) => handleSelectDateChange("end_date", newValue)}
+              />
+              <TextField
+                id="standard-basic"
+                label="Work"
+                variant="outlined"
+                name="work"
+                value={formData?.work ? formData.work : ""}
+                onChange={handleTextInputChange}
+              />
+              <TextField
+                required
+                id="standard-basic"
+                label={"Cost (" + userPrefs?.currency + ")"}
+                variant="outlined"
+                name="cost"
+                value={formData?.cost ? formData.cost : ""}
+                type="number"
+                inputMode="numeric"
+                onChange={handleNumberInputChange}
+                error={errors.costError}
+                helperText={errors.costError && "This field is required"}
+              />
+            </Box>
+          </DialogContent>
+          <div className="form-button-container">
+            {existingFormData && (
+              <button className="button delete-button" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
+            <button className="button close-button" onClick={handleClose}>
+              Cancel
             </button>
-          )}
-          <button className="button close-button" onClick={handleClose}>
-            Cancel
-          </button>
-          {!existingFormData && (
-            <button className="button add-button" onClick={handleAdd}>
-              Add
-            </button>
-          )}
-          {existingFormData && (
-            <button className="button update-button" onClick={handleUpdate}>
-              Update
-            </button>
-          )}
-        </div>
-      </Dialog>
+            {!existingFormData && (
+              <button className="button add-button" onClick={handleAdd}>
+                Add
+              </button>
+            )}
+            {existingFormData && (
+              <button className="button update-button" onClick={handleUpdate}>
+                Update
+              </button>
+            )}
+          </div>
+        </Dialog>
+      </ThemeProvider>
     </LocalizationProvider>
   );
 }

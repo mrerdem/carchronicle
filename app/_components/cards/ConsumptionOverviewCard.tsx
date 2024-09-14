@@ -13,7 +13,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
 
   if (data) {
     if (data.refuel_data?.length > 0) {
-      var style = getComputedStyle(document.body);
+      const style = getComputedStyle(document.body);
 
       // Oder data by date
       const orderedData: RefuelData[] = JSON.parse(JSON.stringify(data.refuel_data));

@@ -3,13 +3,14 @@ import Box from "@mui/material/Box";
 import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { IconButton, TextField } from "@mui/material";
+import { IconButton, TextField, ThemeProvider } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
+import { FormTheme } from "../Themes";
 
 interface DataEntryDialogProps {
   open: boolean;
@@ -113,95 +114,85 @@ export default function InsuranceDataForm(props: DataEntryDialogProps) {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Dialog open={open} onClose={handleClose}>
-        <div className="form-title-container">
-          <DialogTitle>Insurance details</DialogTitle>
-          <IconButton onClick={handleReset}>
-            <RestartAltIcon />
-          </IconButton>
-        </div>
-        <DialogContent>
-          <Box
-            noValidate
-            component="form"
-            sx={{
-              "& .MuiFormControl-root": {
-                mb: 1,
-              },
-              paddingTop: 1,
-            }}
-            autoComplete="off"
-            display={"flex"}
-            flexDirection={"column"}
-          >
-            <TextField
-              id="standard-basic"
-              label="Provider"
-              variant="outlined"
-              name="provider"
-              value={formData?.provider ? formData.provider : ""}
-              onChange={handleTextInputChange}
-            />
-            <DatePicker
-              label="Start date"
-              value={formData?.start_date ? dayjs(formData.start_date) : dayjs(defaultFormData.start_date)}
-              onChange={(newValue) => handleSelectDateChange("start_date", newValue)}
-              slotProps={{
-                textField: {
-                  required: true,
-                  error: errors.startDateError,
-                  helperText: errors.startDateError && "This field is required",
-                },
-              }}
-            />
-            <DatePicker
-              label="End date"
-              value={formData?.end_date ? dayjs(formData.end_date) : dayjs(defaultFormData.end_date)}
-              onChange={(newValue) => handleSelectDateChange("end_date", newValue)}
-              slotProps={{
-                textField: {
-                  required: true,
-                  error: errors.endDateError,
-                  helperText: errors.endDateError && "This field is required",
-                },
-              }}
-            />
-            <TextField
-              required
-              id="standard-basic"
-              label={"Cost (" + userPrefs?.currency + ")"}
-              variant="outlined"
-              name="cost"
-              value={formData?.cost ? formData.cost : ""}
-              type="number"
-              inputMode="numeric"
-              onChange={handleNumberInputChange}
-              error={errors.costError}
-              helperText={errors.costError && "This field is required"}
-            />
-          </Box>
-        </DialogContent>
-        <div className="form-button-container">
-          {existingFormData && (
-            <button className="button delete-button" onClick={handleDelete}>
-              Delete
+      <ThemeProvider theme={FormTheme}>
+        <Dialog open={open} onClose={handleClose}>
+          <div className="form-title-container">
+            <DialogTitle>Insurance details</DialogTitle>
+            <IconButton onClick={handleReset}>
+              <RestartAltIcon />
+            </IconButton>
+          </div>
+          <DialogContent>
+            <Box noValidate component="form" autoComplete="off" display={"flex"} flexDirection={"column"}>
+              <TextField
+                id="standard-basic"
+                label="Provider"
+                variant="outlined"
+                name="provider"
+                value={formData?.provider ? formData.provider : ""}
+                onChange={handleTextInputChange}
+              />
+              <DatePicker
+                label="Start date"
+                value={formData?.start_date ? dayjs(formData.start_date) : dayjs(defaultFormData.start_date)}
+                onChange={(newValue) => handleSelectDateChange("start_date", newValue)}
+                slotProps={{
+                  textField: {
+                    required: true,
+                    error: errors.startDateError,
+                    helperText: errors.startDateError && "This field is required",
+                  },
+                }}
+              />
+              <DatePicker
+                label="End date"
+                value={formData?.end_date ? dayjs(formData.end_date) : dayjs(defaultFormData.end_date)}
+                onChange={(newValue) => handleSelectDateChange("end_date", newValue)}
+                slotProps={{
+                  textField: {
+                    required: true,
+                    error: errors.endDateError,
+                    helperText: errors.endDateError && "This field is required",
+                  },
+                }}
+              />
+              <TextField
+                required
+                id="standard-basic"
+                label={"Cost (" + userPrefs?.currency + ")"}
+                variant="outlined"
+                name="cost"
+                value={formData?.cost ? formData.cost : ""}
+                type="number"
+                inputMode="numeric"
+                onChange={handleNumberInputChange}
+                error={errors.costError}
+                helperText={errors.costError && "This field is required"}
+              />
+            </Box>
+          </DialogContent>
+          <div className="form-button-container">
+            {existingFormData && (
+              <button className="button delete-button" onClick={handleDelete}>
+                Delete
+              </button>
+            )}
+            <button className="button close-button" onClick={handleClose}>
+              Cancel
             </button>
-          )}
-          <button className="button close-button" onClick={handleClose}>
-            Cancel
-          </button>
-          {!existingFormData && (
-            <button className="button add-button" onClick={handleAdd}>
-              Add
-            </button>
-          )}
-          {existingFormData && (
-            <button className="button update-button" onClick={handleUpdate}>
-              Update
-            </button>
-          )}
-        </div>
-      </Dialog>
+            {!existingFormData && (
+              <button className="button add-button" onClick={handleAdd}>
+                Add
+              </button>
+            )}
+            {existingFormData && (
+              <button className="button update-button" onClick={handleUpdate}>
+                Update
+              </button>
+            )}
+          </div>
+        </Dialog>
+      </ThemeProvider>
     </LocalizationProvider>
   );
 }
