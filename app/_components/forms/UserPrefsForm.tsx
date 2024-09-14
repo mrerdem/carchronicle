@@ -18,7 +18,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
-import { CURRENCIES, DISTANCE_UNITS, VOLUME_UNITS } from "@/app/constants";
+import { CURRENCIES, DISTANCE_UNIT_SYMBOLS, DISTANCE_UNITS, VOLUME_UNIT_SYMBOLS, VOLUME_UNITS } from "@/app/constants";
 import { capitalizeFirstLetter } from "../Utils";
 import { FormTheme } from "../Themes";
 
@@ -141,7 +141,7 @@ export default function UserPrefsForm(props: DataEntryDialogProps) {
                 >
                   {VOLUME_UNITS.map((unit, index) => (
                     <MenuItem key={index} value={unit}>
-                      {capitalizeFirstLetter(unit)}
+                      {capitalizeFirstLetter(unit) + " (" + VOLUME_UNIT_SYMBOLS[index] + ")"}
                     </MenuItem>
                   ))}
                 </Select>
@@ -161,7 +161,7 @@ export default function UserPrefsForm(props: DataEntryDialogProps) {
                 >
                   {DISTANCE_UNITS.map((unit, index) => (
                     <MenuItem key={index} value={unit}>
-                      {capitalizeFirstLetter(unit)}
+                      {capitalizeFirstLetter(unit) + " (" + DISTANCE_UNIT_SYMBOLS[index] + ")"}
                     </MenuItem>
                   ))}
                 </Select>

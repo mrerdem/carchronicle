@@ -31,7 +31,11 @@ export const ACCIDENT_INFO_PRINTED = ["date", "info"];
 
 export const VOLUME_UNITS = ["litre", "gallon"];
 
+export const VOLUME_UNIT_SYMBOLS = ["L", "gal"];
+
 export const DISTANCE_UNITS = ["kilometre", "mile"];
+
+export const DISTANCE_UNIT_SYMBOLS = ["km", "mi"];
 
 export const CURRENCIES = [
   "USD",

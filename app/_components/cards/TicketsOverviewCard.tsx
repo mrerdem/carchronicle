@@ -38,13 +38,14 @@ export function TicketsOverviewCard(data: VehicleData | null) {
           style={{ gridRowEnd: totalCost > 0 ? "span 14" : "span 5" }}
         >
           <div className="card-title">Tickets Overview</div>
-          <p></p>
-          Total cost:{" "}
-          {Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: userPrefs.currency,
-          }).format(totalCost)}
           <br />
+          <div className="card-text">
+            Total cost:{" "}
+            {Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: userPrefs.currency,
+            }).format(totalCost)}
+          </div>
           {yearlyCosts && (
             <BarChart
               xAxis={[

@@ -33,7 +33,7 @@ export function DataCard(
           </IconButton>
         </div>
       </div>
-      <div>
+      <div className="card-text">
         {fieldsWithData.map((field, index) => (
           <div key={index} style={{ display: "flex" }}>
             <div>{capitalizeFirstLetter(field).replaceAll("_", " ")}:</div>

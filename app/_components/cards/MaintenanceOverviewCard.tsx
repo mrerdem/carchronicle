@@ -24,13 +24,14 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
           style={{ gridRowEnd: totalServiceCost > 0 ? "span 14" : "span 5" }}
         >
           <div className="card-title">Maintenance/Repair Overview</div>
-          <p></p>
-          Total service cost:{" "}
-          {Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: userPrefs.currency,
-          }).format(totalServiceCost)}
           <br />
+          <div className="card-text">
+            Total service cost:{" "}
+            {Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: userPrefs.currency,
+            }).format(totalServiceCost)}
+          </div>
           {totalServiceCost > 0 && (
             <PieChart
               series={[

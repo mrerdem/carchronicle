@@ -1,5 +1,6 @@
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 import { useAppSelector } from "@/app/_redux/hooks";
+import { DISTANCE_UNIT_SYMBOLS, DISTANCE_UNITS, VOLUME_UNIT_SYMBOLS, VOLUME_UNITS } from "@/app/constants";
 import { BarChart } from "@mui/x-charts";
 import { LineChart } from "@mui/x-charts/LineChart";
 import dayjs from "dayjs";
@@ -34,19 +35,25 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
         <>
           <div className="card overview-card consumption-overview-card" style={rowSpan}>
             <div className="card-title">Consumption Overview</div>
-            <p></p>
-            <div>
-              {data.avg_consumption > 0 ? (
+            <br />
+            <div className="card-text">
+              {data.avg_consumption > 0 && data.avg_mileage > 0 ? (
                 <>
-                  Average consumption:{" "}
-                  {data.avg_consumption > 0
-                    ? data.avg_consumption.toFixed(2) + " " + userPrefs?.volume + "/year"
-                    : "N/A"}
+                  {userPrefs.distance === DISTANCE_UNITS[0] && userPrefs.volume === VOLUME_UNITS[0]
+                    ? "Average: " + ((data.avg_consumption / data.avg_mileage) * 100).toFixed(2) + " L/100 km"
+                    : userPrefs.distance === DISTANCE_UNITS[1] && userPrefs.volume === VOLUME_UNITS[1]
+                    ? "Average: " + (data.avg_mileage / data.avg_consumption).toFixed(2) + " MPG"
+                    : "Average: " +
+                      (data.avg_consumption / data.avg_mileage).toFixed(2) +
+                      " " +
+                      VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs.volume)] +
+                      "/" +
+                      DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)]}
                 </>
               ) : null}
             </div>
-            <p></p>
-            <div>Refuels ({userPrefs.volume}):</div>
+            <br />
+            <div>Refuels ({VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs.volume)]}):</div>
             <BarChart
               xAxis={[
                 {
@@ -72,7 +79,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
                 currency: userPrefs.currency,
               }).formatToParts()[0].value +
                 "/" +
-                userPrefs.volume}
+                VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs.volume)]}
               ):{" "}
             </div>
             <LineChart
@@ -100,7 +107,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
       return (
         <div className="card overview-card consumption-overview-card" style={{ gridRowEnd: "span 5" }}>
           <div className="card-title">Consumption Overview</div>
-          <p></p>
+          <br />
           <div className="card-text">Add refuel info to get an overview.</div>
         </div>
       );
@@ -109,7 +116,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
     return (
       <div className="card overview-card consumption-overview-card" style={{ gridRowEnd: "span 5" }}>
         <div className="card-title">Consumption Overview</div>
-        <p></p>
+        <br />
         <div className="card-text">Add a vehicle first.</div>
       </div>
     );

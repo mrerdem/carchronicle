@@ -33,9 +33,8 @@ export function AccidentsOverviewCard(data: VehicleData | null) {
           style={{ gridRowEnd: totalCount > 0 ? "span 14" : "span 5" }}
         >
           <div className="card-title">Accidents Overview</div>
-          <p></p>
-          Total: {totalCount}
           <br />
+          <div className="card-text">Total: {totalCount}</div>
           <BarChart
             xAxis={[
               {

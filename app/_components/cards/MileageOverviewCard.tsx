@@ -1,5 +1,6 @@
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 import { useAppSelector } from "@/app/_redux/hooks";
+import { DISTANCE_UNIT_SYMBOLS, DISTANCE_UNITS } from "@/app/constants";
 import { LineChart } from "@mui/x-charts/LineChart";
 
 export function MileageOverviewCard(data: VehicleData | null) {
@@ -18,16 +19,19 @@ export function MileageOverviewCard(data: VehicleData | null) {
           <div className="card-title">Mileage Overview</div>
           <br />
           {data.avg_mileage > 0 ? (
-            <>
+            <div className="card-text">
               Average mileage:{" "}
               {data.avg_mileage > 0
-                ? data.avg_mileage.toFixed(2) + " " + userPrefs?.distance + "/year"
+                ? data.avg_mileage.toFixed(2) +
+                  " " +
+                  DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)] +
+                  "/year"
                 : "Insufficient data"}
               <br />
               <br />
-            </>
+            </div>
           ) : null}
-          Odometer readings ({userPrefs.distance}):
+          Odometer readings ({DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)]}):
           <LineChart
             xAxis={[
               {
