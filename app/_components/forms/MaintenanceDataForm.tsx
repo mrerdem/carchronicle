@@ -169,7 +169,16 @@ export default function MaintenanceDataForm(props: DataEntryDialogProps) {
               <TextField
                 required
                 id="standard-basic"
-                label={"Cost (" + userPrefs?.currency + ")"}
+                label={
+                  userPrefs?.currency
+                    ? "Cost (" +
+                      Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: userPrefs.currency,
+                      }).formatToParts()[0].value +
+                      ")"
+                    : ""
+                }
                 variant="outlined"
                 name="cost"
                 value={formData?.cost ? formData.cost : ""}

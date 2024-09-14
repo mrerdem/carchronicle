@@ -5,6 +5,7 @@ import { expect, test } from "@jest/globals";
 test("Row span calculation for VehicleOverviewCard", () => {
   expect(VehiclesOverviewCard([]).props.style["gridRowEnd"]).toBe("span 5");
 
+  // 3 active cars
   expect(
     VehiclesOverviewCard([
       {
@@ -83,8 +84,9 @@ test("Row span calculation for VehicleOverviewCard", () => {
         details: false,
       },
     ]).props.style["gridRowEnd"]
-  ).toBe("span 8");
+  ).toBe("span 9");
 
+  // 2 active + 1 sold car
   expect(
     VehiclesOverviewCard([
       {
@@ -163,8 +165,9 @@ test("Row span calculation for VehicleOverviewCard", () => {
         details: false,
       },
     ]).props.style["gridRowEnd"]
-  ).toBe("span 11");
+  ).toBe("span 13");
 
+  // 1 active car, 1 active motorcycle, 1 sold car
   expect(
     VehiclesOverviewCard([
       {
@@ -243,8 +246,9 @@ test("Row span calculation for VehicleOverviewCard", () => {
         details: false,
       },
     ]).props.style["gridRowEnd"]
-  ).toBe("span 12");
+  ).toBe("span 14");
 
+  // 2 active car 1 active motorcycle
   expect(
     VehiclesOverviewCard([
       {
@@ -323,5 +327,5 @@ test("Row span calculation for VehicleOverviewCard", () => {
         details: false,
       },
     ]).props.style["gridRowEnd"]
-  ).toBe("span 9");
+  ).toBe("span 10");
 });

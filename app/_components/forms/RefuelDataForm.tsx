@@ -11,6 +11,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
 import { FormTheme } from "../Themes";
+import { VOLUME_UNIT_SYMBOLS, VOLUME_UNITS } from "@/app/constants";
 
 interface DataEntryDialogProps {
   open: boolean;
@@ -130,7 +131,9 @@ export default function RefuelDataForm(props: DataEntryDialogProps) {
               <TextField
                 required
                 id="standard-basic"
-                label={"Amount (" + userPrefs?.volume + ")"}
+                label={
+                  "Amount (" + VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs?.volume)] + ")"
+                }
                 variant="outlined"
                 name="amount"
                 value={formData?.amount ? formData.amount : ""}
@@ -143,7 +146,16 @@ export default function RefuelDataForm(props: DataEntryDialogProps) {
               <TextField
                 required
                 id="standard-basic"
-                label={"Cost (" + userPrefs?.currency + ")"}
+                label={
+                  userPrefs?.currency
+                    ? "Cost (" +
+                      Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: userPrefs.currency,
+                      }).formatToParts()[0].value +
+                      ")"
+                    : ""
+                }
                 variant="outlined"
                 name="cost"
                 value={formData?.cost ? formData.cost : ""}

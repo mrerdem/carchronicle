@@ -64,6 +64,7 @@ export default function Vehicles() {
             onSubmit={handleVehicleFormSubmit}
             onClose={closeVehicleForm}
             existingFormData={dataToEdit}
+            userPrefs={userPrefs}
           ></VehicleDataForm>
           {VehiclesOverviewCard(vehicleData)}
           {vehicleData.map((data, index) =>

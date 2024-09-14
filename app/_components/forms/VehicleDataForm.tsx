@@ -53,10 +53,11 @@ interface DataEntryDialogProps {
   onSubmit: (task: string, data: VehicleData) => void;
   onClose: () => void;
   existingFormData: VehicleData | null;
+  userPrefs: UserPrefs;
 }
 
 export default function VehicleDataForm(props: DataEntryDialogProps) {
-  const { open, onSubmit, onClose, existingFormData } = props;
+  const { open, onSubmit, onClose, existingFormData, userPrefs } = props;
   const [formData, setFormData] = useState<VehicleData>(defaultFormData);
   const [errors, setErrors] = useState(defaultErrors);
 
@@ -261,7 +262,16 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
               />
               <TextField
                 id="standard-basic"
-                label="Purchase price"
+                label={
+                  userPrefs?.currency
+                    ? "Purchase price (" +
+                      Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: userPrefs.currency,
+                      }).formatToParts()[0].value +
+                      ")"
+                    : ""
+                }
                 value={formData.purchase_price ? formData.purchase_price : ""}
                 variant="outlined"
                 name="purchase_price"
@@ -276,7 +286,16 @@ export default function VehicleDataForm(props: DataEntryDialogProps) {
               />
               <TextField
                 id="standard-basic"
-                label="Sell price"
+                label={
+                  userPrefs?.currency
+                    ? "Sell price (" +
+                      Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: userPrefs.currency,
+                      }).formatToParts()[0].value +
+                      ")"
+                    : ""
+                }
                 value={formData.sell_price ? formData.sell_price : ""}
                 variant="outlined"
                 name="sell_price"

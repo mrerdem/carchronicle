@@ -11,6 +11,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { FormTheme } from "../Themes";
+import { DISTANCE_UNIT_SYMBOLS, DISTANCE_UNITS } from "@/app/constants";
 
 interface DataEntryDialogProps {
   open: boolean;
@@ -127,7 +128,11 @@ export default function OdometerDataForm(props: DataEntryDialogProps) {
               <TextField
                 required
                 id="standard-basic"
-                label={"Reading (" + userPrefs?.distance.toLowerCase() + ")"}
+                label={
+                  "Reading (" +
+                  DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs?.distance)] +
+                  ")"
+                }
                 variant="outlined"
                 name="reading"
                 value={formData?.reading ? formData.reading : ""}
