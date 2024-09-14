@@ -30,9 +30,9 @@ export function VehiclesOverviewCard(data: VehicleData[]) {
       2 + // Title ("Vehicle Overview")
       1 + // All vehicles
       activeRowSpan +
-      (activeRowSpan > 0 ? 2 : 0) + // +2 for title and space
+      (activeRowSpan > 0 ? 3 : 0) + // +3 for title and margins
       soldRowSpan +
-      (soldRowSpan > 0 ? 2 : 0); // +2 for title and space
+      (soldRowSpan > 0 ? 3 : 0); // +3 for title and margins
 
     return (
       <div
@@ -50,6 +50,7 @@ export function VehiclesOverviewCard(data: VehicleData[]) {
               <div row-num={activeRowSpan}>
                 <br />
                 <li>Active vehicles ({activeVehicles.length} total):</li>
+                <br />
                 <ul>
                   {VEHICLE_TYPES.map(
                     (type, index) =>
@@ -66,6 +67,7 @@ export function VehiclesOverviewCard(data: VehicleData[]) {
               <div row-num={soldRowSpan}>
                 <br />
                 <li>Sold vehicles ({soldVehicles.length} total):</li>
+                <br />
                 <ul>
                   {VEHICLE_TYPES.map(
                     (type, index) =>

@@ -1,6 +1,7 @@
 import { IconButton } from "@mui/material";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import { capitalizeFirstLetter } from "../Utils";
+import { DISTANCE_UNIT_SYMBOLS, DISTANCE_UNITS, VOLUME_UNIT_SYMBOLS, VOLUME_UNITS } from "@/app/constants";
 
 export function DataCard(
   key: number,
@@ -46,8 +47,12 @@ export function DataCard(
                     data[field as keyof typeof data]
                   )
                 : data[field as keyof typeof data]) +
-                (field.includes("reading") ? " " + userPrefs?.distance : "") +
-                (field.includes("amount") ? " " + userPrefs?.volume : "")}
+                (field.includes("reading")
+                  ? " " + DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs?.distance)]
+                  : "") +
+                (field.includes("amount")
+                  ? " " + VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs?.volume)]
+                  : "")}
             </div>
           </div>
         ))}
