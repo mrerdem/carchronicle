@@ -1,6 +1,7 @@
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { getCoef } from "../Utils";
 
 export function TicketsOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
@@ -32,10 +33,17 @@ export function TicketsOverviewCard(data: VehicleData | null) {
         return acc + Number(year.cost);
       }, 0);
 
+      // Calculate short representation coefficient (for left margin conformation)
+      const plotCoef = getCoef(
+        yearlyCosts.reduce((max, data) => {
+          return data.cost > max ? (max = data.cost) : (max = max);
+        }, 0)
+      );
+
       return (
         <div
           className="card overview-card tickets-overview-card"
-          style={{ gridRowEnd: totalCost > 0 ? "span 14" : "span 5" }}
+          style={{ gridRowEnd: totalCost > 0 ? "span 16" : "span 5" }}
         >
           <div className="card-title">Tickets Overview</div>
           <br />
@@ -47,20 +55,34 @@ export function TicketsOverviewCard(data: VehicleData | null) {
             }).format(totalCost)}
           </div>
           {yearlyCosts && (
-            <BarChart
-              xAxis={[
+            <>
+              <br />
+              <div className="card-text">
+                Yearly costs ({plotCoef > 1 ? "x" + plotCoef + " " : ""}
                 {
-                  scaleType: "band",
-                  data: yearlyCosts.map((obj: TicketCost) => obj.year.toString()),
-                },
-              ]}
-              series={[{ data: yearlyCosts.map((obj: TicketCost) => obj.cost) }]}
-              colors={[style.getPropertyValue("--color-7")]}
-              height={200}
-              margin={{ top: 20 }}
-              grid={{ vertical: false, horizontal: true }}
-              sx={{ "&&": { touchAction: "auto" } }}
-            />
+                  Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: userPrefs.currency,
+                  }).formatToParts()[0].value
+                }
+                ):
+              </div>
+
+              <BarChart
+                xAxis={[
+                  {
+                    scaleType: "band",
+                    data: yearlyCosts.map((obj: TicketCost) => obj.year.toString()),
+                  },
+                ]}
+                series={[{ data: yearlyCosts.map((obj: TicketCost) => obj.cost / plotCoef) }]}
+                colors={[style.getPropertyValue("--color-7")]}
+                height={200}
+                margin={{ top: 20, left: 30, right: 20 }}
+                grid={{ vertical: false, horizontal: true }}
+                sx={{ "&&": { touchAction: "auto" } }}
+              />
+            </>
           )}
         </div>
       );

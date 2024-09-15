@@ -41,22 +41,19 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
                       id: 0,
                       value: totalMaintenanceCost,
                       color: style.getPropertyValue("--color-7"),
-                      label: "Total\nmaintenance\ncost",
+                      label: "M",
                     },
                     {
                       id: 1,
                       value: totalRepairCost,
                       color: style.getPropertyValue("--color-8"),
-                      label: "Total\nrepair\ncost",
+                      label: "R",
                     },
                   ],
                 },
               ]}
               height={200}
-              margin={{
-                top: 20,
-                bottom: 20,
-              }}
+              margin={{ top: 20, left: 30, right: 20, bottom: 20 }}
               sx={{ "&&": { touchAction: "auto" } }}
             />
           )}

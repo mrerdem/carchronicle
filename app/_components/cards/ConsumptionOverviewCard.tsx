@@ -1,7 +1,7 @@
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { DISTANCE_UNIT_SYMBOLS, DISTANCE_UNITS, VOLUME_UNIT_SYMBOLS, VOLUME_UNITS } from "@/app/constants";
-import { BarChart } from "@mui/x-charts";
+import { BarChart, BarPlot, ResponsiveChartContainer } from "@mui/x-charts";
 import { LineChart } from "@mui/x-charts/LineChart";
 import dayjs from "dayjs";
 
@@ -54,6 +54,24 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
             </div>
             <br />
             <div>Refuels ({VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs.volume)]}):</div>
+            {/* <ResponsiveChartContainer
+              height={200}
+              series={[
+                {
+                  data: summedData.map((obj) => obj.amount),
+                  label: "uv",
+                  type: "bar",
+                },
+              ]}
+              xAxis={[
+                {
+                  data: summedData.map((obj) => obj.date),
+                  scaleType: "band",
+                },
+              ]}
+            >
+              <BarPlot />
+            </ResponsiveChartContainer> */}
             <BarChart
               xAxis={[
                 {
@@ -68,7 +86,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
               ]}
               colors={[style.getPropertyValue("--color-7")]}
               height={200}
-              margin={{ top: 20 }}
+              margin={{ top: 20, left: 30, right: 20 }}
               grid={{ vertical: false, horizontal: true }}
               sx={{ "&&": { touchAction: "auto" } }}
             />
@@ -86,7 +104,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
               xAxis={[
                 {
                   data: summedData.map((obj) => obj.date),
-                  scaleType: "point",
+                  scaleType: "band",
                 },
               ]}
               series={[
@@ -96,7 +114,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
               ]}
               colors={[style.getPropertyValue("--color-7")]}
               height={200}
-              margin={{ top: 20 }}
+              margin={{ top: 20, left: 30, right: 20 }}
               grid={{ vertical: false, horizontal: true }}
               sx={{ "&&": { touchAction: "auto" } }}
             />

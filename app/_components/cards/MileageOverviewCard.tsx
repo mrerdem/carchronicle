@@ -2,6 +2,7 @@ import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice"
 import { useAppSelector } from "@/app/_redux/hooks";
 import { DISTANCE_UNIT_SYMBOLS, DISTANCE_UNITS } from "@/app/constants";
 import { LineChart } from "@mui/x-charts/LineChart";
+import { getCoef } from "../Utils";
 
 export function MileageOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
@@ -13,6 +14,13 @@ export function MileageOverviewCard(data: VehicleData | null) {
 
       // Calculate row span for masonry layout
       const rowSpan = 14 + (data.avg_mileage > 0 ? 2 : 0);
+
+      // Calculate short representation coefficient (for left margin conformation)
+      const plotCoef = getCoef(
+        sortedData.reduce((max, data) => {
+          return data.reading > max ? (max = data.reading) : (max = max);
+        }, 0)
+      );
 
       return (
         <div className="card overview-card mileage-overview-card" style={{ gridRowEnd: "span " + rowSpan }}>
@@ -31,22 +39,23 @@ export function MileageOverviewCard(data: VehicleData | null) {
               <br />
             </div>
           ) : null}
-          Odometer readings ({DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)]}):
+          Odometer readings ({plotCoef > 1 ? "x" + plotCoef + " " : ""}
+          {DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)]}):
           <LineChart
             xAxis={[
               {
                 data: sortedData.map((obj) => obj.date),
-                scaleType: "point",
+                scaleType: "band",
               },
             ]}
             series={[
               {
-                data: sortedData.map((obj) => obj.reading),
+                data: sortedData.map((obj) => obj.reading / plotCoef),
               },
             ]}
             colors={[style.getPropertyValue("--color-7")]}
             height={200}
-            margin={{ top: 20 }}
+            margin={{ top: 20, left: 30, right: 20 }}
             grid={{ vertical: false, horizontal: true }}
             sx={{ "&&": { touchAction: "auto" } }}
           />

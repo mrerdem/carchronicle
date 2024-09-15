@@ -30,11 +30,13 @@ export function AccidentsOverviewCard(data: VehicleData | null) {
       return (
         <div
           className="card overview-card accidents-overview-card"
-          style={{ gridRowEnd: totalCount > 0 ? "span 14" : "span 5" }}
+          style={{ gridRowEnd: totalCount > 0 ? "span 16" : "span 5" }}
         >
           <div className="card-title">Accidents Overview</div>
           <br />
           <div className="card-text">Total: {totalCount}</div>
+          <br />
+          <div className="card-text">Yearly accidents:</div>
           <BarChart
             xAxis={[
               {
@@ -45,7 +47,7 @@ export function AccidentsOverviewCard(data: VehicleData | null) {
             colors={[style.getPropertyValue("--color-7")]}
             series={[{ data: yearlyCounts.map((obj) => obj.count) }]}
             height={200}
-            margin={{ top: 20 }}
+            margin={{ top: 20, left: 30, right: 20 }}
             grid={{ vertical: false, horizontal: true }}
             sx={{ "&&": { touchAction: "auto" } }}
           />

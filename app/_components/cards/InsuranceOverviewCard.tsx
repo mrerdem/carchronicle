@@ -1,6 +1,7 @@
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { getCoef } from "../Utils";
 
 export function InsuranceOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
@@ -21,8 +22,15 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
         return acc + Number(year.cost);
       }, 0);
 
+      // Calculate short representation coefficient (for left margin conformation)
+      const plotCoef = getCoef(
+        yearlyCosts.reduce((max, data) => {
+          return data.cost > max ? (max = data.cost) : (max = max);
+        }, 0)
+      );
+
       return (
-        <div className="card overview-card insurance-card" style={{ gridRowEnd: totalCost > 0 ? "span 14" : "span 5" }}>
+        <div className="card overview-card insurance-card" style={{ gridRowEnd: totalCost > 0 ? "span 16" : "span 5" }}>
           <div className="card-title">Insurance Overview</div>
           <br />
           <div className="card-text">
@@ -31,6 +39,17 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
               style: "currency",
               currency: userPrefs.currency,
             }).format(totalCost)}
+          </div>
+          <br />
+          <div className="card-text">
+            Yearly costs ({plotCoef > 1 ? "x" + plotCoef + " " : ""}
+            {
+              Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: userPrefs.currency,
+              }).formatToParts()[0].value
+            }
+            ):
           </div>
           <BarChart
             xAxis={[
@@ -41,12 +60,12 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
             ]}
             series={[
               {
-                data: yearlyCosts.map((obj) => obj.cost),
+                data: yearlyCosts.map((obj) => obj.cost / plotCoef),
               },
             ]}
             colors={[style.getPropertyValue("--color-7")]}
             height={200}
-            margin={{ top: 20 }}
+            margin={{ top: 20, left: 30, right: 20 }}
             grid={{ vertical: false, horizontal: true }}
             sx={{ "&&": { touchAction: "auto" } }}
           />
