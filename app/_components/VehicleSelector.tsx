@@ -32,7 +32,7 @@ export function VehicleSelector({}) {
                 index={index}
                 key={vehicle.row}
                 clickAction={activateVehicle}
-                selected={vehicle.row === activeVehicleIndex}
+                selected={index === activeVehicleIndex}
               />
             ))
           : null}
