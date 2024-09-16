@@ -8,11 +8,11 @@ import dayjs from "dayjs";
 export function ConsumptionOverviewCard(data: VehicleData | null) {
   const userPrefs = useAppSelector(selectUserPrefs);
 
-  const rowSpan = {
-    gridRowEnd: data?.avg_consumption > 0 ? "span 27" : "span 25",
-  };
-
   if (data) {
+    const rowSpan = {
+      gridRowEnd: "span 27",
+    };
+
     if (data.refuel_data?.length > 0) {
       const style = getComputedStyle(document.body);
 
@@ -36,9 +36,9 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
           <div className="card overview-card consumption-overview-card" style={rowSpan}>
             <div className="card-title">Consumption Overview</div>
             <br />
-            <div className="card-text">
-              {data.avg_consumption > 0 && data.avg_mileage > 0 ? (
-                <>
+            {data.avg_consumption > 0 && data.avg_mileage > 0 ? (
+              <>
+                <div className="card-text">
                   {userPrefs.distance === DISTANCE_UNITS[0] && userPrefs.volume === VOLUME_UNITS[0]
                     ? "Average: " + ((data.avg_consumption / data.avg_mileage) * 100).toFixed(2) + " L/100 km"
                     : userPrefs.distance === DISTANCE_UNITS[1] && userPrefs.volume === VOLUME_UNITS[1]
@@ -49,29 +49,13 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
                       VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs.volume)] +
                       "/" +
                       DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)]}
-                </>
-              ) : null}
-            </div>
+                </div>
+              </>
+            ) : (
+              <div className="card-text">Average: N/A (insufficient data)</div>
+            )}
             <br />
             <div>Refuels ({VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs.volume)]}):</div>
-            {/* <ResponsiveChartContainer
-              height={200}
-              series={[
-                {
-                  data: summedData.map((obj) => obj.amount),
-                  label: "uv",
-                  type: "bar",
-                },
-              ]}
-              xAxis={[
-                {
-                  data: summedData.map((obj) => obj.date),
-                  scaleType: "band",
-                },
-              ]}
-            >
-              <BarPlot />
-            </ResponsiveChartContainer> */}
             <BarChart
               xAxis={[
                 {
