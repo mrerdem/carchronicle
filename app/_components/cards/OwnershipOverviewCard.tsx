@@ -1,6 +1,6 @@
 import { VEHICLE_TYPES } from "@/app/constants";
 
-export function VehiclesOverviewCard(data: VehicleData[]) {
+export function OwnershipOverviewCard(data: VehicleData[]) {
   if (data?.length > 0) {
     const activeVehicles = data.filter((vehicle) => !vehicle.sell_date && !vehicle.sell_price);
     const soldVehicles = data.filter((vehicle) => vehicle.sell_date || vehicle.sell_price);
@@ -36,12 +36,12 @@ export function VehiclesOverviewCard(data: VehicleData[]) {
 
     return (
       <div
-        className="card overview-card vehicles-overview-card"
+        className="card overview-card ownership-overview-card"
         style={{
           gridRowEnd: "span " + totalRowSpan,
         }}
       >
-        <div className="card-title">Vehicles Overview</div>
+        <div className="card-title">Ownership Overview</div>
         <br />
         <div className="card-text">
           <div row-num="1">All vehicles ({data.length} total):</div>
@@ -86,8 +86,8 @@ export function VehiclesOverviewCard(data: VehicleData[]) {
     );
   } else {
     return (
-      <div className="card overview-card vehicles-overview-card" style={{ gridRowEnd: "span 5" }}>
-        <div className="card-title">Vehicles Overview</div>
+      <div className="card overview-card ownership-overview-card" style={{ gridRowEnd: "span 5" }}>
+        <div className="card-title">Ownership Overview</div>
         <br />
         <div className="card-text">Add a vehicle to get an overview.</div>
       </div>

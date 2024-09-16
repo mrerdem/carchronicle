@@ -15,3 +15,30 @@ export const getCoef = (value: number) => {
   }
   return coef;
 };
+
+// Calculates total cost
+export const calcTotalCost = (data: VehicleData) => {
+  let cost = data.purchase_price ? data.purchase_price : 0;
+  cost -= data.sell_price ? data.sell_price : 0;
+  if (data.refuel_data) {
+    data.refuel_data.forEach((data) => {
+      cost += data.cost;
+    });
+  }
+  if (data.insurance_data) {
+    data.insurance_data.forEach((data) => {
+      cost += data.cost;
+    });
+  }
+  if (data.maintenance_data) {
+    data.maintenance_data.forEach((data) => {
+      cost += data.cost;
+    });
+  }
+  if (data.ticket_data) {
+    data.ticket_data.forEach((data) => {
+      cost += data.cost;
+    });
+  }
+  return cost;
+};

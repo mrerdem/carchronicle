@@ -8,6 +8,7 @@ import { AccidentsOverviewCard } from "@/app/_components/cards/AccidentsOverview
 import { TicketsOverviewCard } from "@/app/_components/cards/TicketsOverviewCard";
 import { useAppSelector } from "@/app/_redux/hooks";
 import { selectActiveVehicleData } from "@/app/_redux/features/vehicleData/vehicleDataSlice";
+import { VehicleOverviewCard } from "../_components/cards/VehicleOverviewCard";
 
 export default function Dashboard() {
   const activeVehicleData = useAppSelector(selectActiveVehicleData);
@@ -20,6 +21,7 @@ export default function Dashboard() {
         </div>
       )}
       <div className="card-container">
+        {VehicleOverviewCard(activeVehicleData)}
         {ConsumptionOverviewCard(activeVehicleData)}
         {MileageOverviewCard(activeVehicleData)}
         {InsuranceOverviewCard(activeVehicleData)}

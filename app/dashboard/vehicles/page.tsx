@@ -12,7 +12,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
 import { selectSessionData } from "@/app/_redux/features/session/sessionDataSlice";
 import VehicleDataForm from "@/app/_components/forms/VehicleDataForm";
-import { VehiclesOverviewCard } from "@/app/_components/cards/VehiclesOverviewCard";
+import { OwnershipOverviewCard } from "@/app/_components/cards/OwnershipOverviewCard";
 import { selectUserPrefs } from "@/app/_redux/features/userPrefs/userPrefsSlice";
 
 export default function Vehicles() {
@@ -66,7 +66,7 @@ export default function Vehicles() {
             existingFormData={dataToEdit}
             userPrefs={userPrefs}
           ></VehicleDataForm>
-          {VehiclesOverviewCard(vehicleData)}
+          {OwnershipOverviewCard(vehicleData)}
           {vehicleData.map((data, index) =>
             DataCard(index + 1, "Vehicle info", data, VEHICLE_INFO_PRINTED, userPrefs, handleCardClick)
           )}

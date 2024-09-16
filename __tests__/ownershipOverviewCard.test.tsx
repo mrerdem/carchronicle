@@ -1,13 +1,13 @@
-import { VehiclesOverviewCard } from "@/app/_components/cards/VehiclesOverviewCard";
+import { OwnershipOverviewCard } from "@/app/_components/cards/OwnershipOverviewCard";
 import "@testing-library/jest-dom";
 import { expect, test } from "@jest/globals";
 
 test("Row span calculation for VehicleOverviewCard", () => {
-  expect(VehiclesOverviewCard([]).props.style["gridRowEnd"]).toBe("span 5");
+  expect(OwnershipOverviewCard([]).props.style["gridRowEnd"]).toBe("span 5");
 
   // 3 active cars
   expect(
-    VehiclesOverviewCard([
+    OwnershipOverviewCard([
       {
         type: "car",
         make: "a",
@@ -88,7 +88,7 @@ test("Row span calculation for VehicleOverviewCard", () => {
 
   // 2 active + 1 sold car
   expect(
-    VehiclesOverviewCard([
+    OwnershipOverviewCard([
       {
         type: "car",
         make: "a",
@@ -169,7 +169,7 @@ test("Row span calculation for VehicleOverviewCard", () => {
 
   // 1 active car, 1 active motorcycle, 1 sold car
   expect(
-    VehiclesOverviewCard([
+    OwnershipOverviewCard([
       {
         type: "car",
         make: "a",
@@ -250,7 +250,7 @@ test("Row span calculation for VehicleOverviewCard", () => {
 
   // 2 active car 1 active motorcycle
   expect(
-    VehiclesOverviewCard([
+    OwnershipOverviewCard([
       {
         type: "car",
         make: "a",
