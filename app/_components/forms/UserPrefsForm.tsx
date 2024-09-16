@@ -27,12 +27,13 @@ interface DataEntryDialogProps {
   onSubmit: (user_id: string, data: UserPrefs) => void;
   onClose: () => void;
   existingFormData: UserPrefs;
+  cancellable: boolean;
 }
 
 const defaultFormData: UserPrefs = {
-  currency: null,
-  volume: null,
-  distance: null,
+  currency: "CAD",
+  volume: VOLUME_UNITS[0],
+  distance: DISTANCE_UNITS[0],
 };
 
 const defaultErrors = {
@@ -42,7 +43,7 @@ const defaultErrors = {
 };
 
 export default function UserPrefsForm(props: DataEntryDialogProps) {
-  const { onClose, onSubmit, open, existingFormData } = props;
+  const { onClose, onSubmit, open, existingFormData, cancellable } = props;
   const [formData, setFormData] = useState<UserPrefs>(defaultFormData);
   const [errors, setErrors] = useState(defaultErrors);
   const sessionData = useAppSelector(selectSessionData);
@@ -62,8 +63,10 @@ export default function UserPrefsForm(props: DataEntryDialogProps) {
   };
 
   const handleClose = () => {
-    onClose();
-    setErrors(defaultErrors);
+    if (cancellable) {
+      onClose();
+      setErrors(defaultErrors);
+    }
   };
 
   const handleAdd = () => {
@@ -170,9 +173,11 @@ export default function UserPrefsForm(props: DataEntryDialogProps) {
             </Box>
           </DialogContent>
           <div className="form-button-container">
-            <button className="button close-button" onClick={handleClose}>
-              Cancel
-            </button>
+            {cancellable ? (
+              <button className="button close-button" onClick={handleClose}>
+                Cancel
+              </button>
+            ) : null}
             {
               <button className="button add-button" onClick={handleAdd}>
                 Set

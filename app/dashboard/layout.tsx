@@ -125,6 +125,7 @@ export default function DashboardLayout({
           onSubmit={handleUserPrefsFormSubmit}
           onClose={closeUserPrefsForm}
           existingFormData={userPrefs}
+          cancellable={userPrefs != null}
         ></UserPrefsForm>
 
         {children}
