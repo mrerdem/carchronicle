@@ -28,14 +28,19 @@ export function MileageOverviewCard(data: VehicleData | null) {
           <br />
           {data.avg_mileage > 0 ? (
             <div className="card-text">
-              Average mileage:{" "}
-              {data.avg_mileage > 0
-                ? data.avg_mileage.toFixed(2) +
-                  " " +
-                  DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)] +
-                  "/year"
-                : "Insufficient data"}
-              <br />
+              <div style={{ display: "flex" }}>
+                <div>Average mileage:</div>
+                <div className="card-dotfill"></div>
+                <div>
+                  {data.avg_mileage > 0
+                    ? data.avg_mileage.toFixed(2) +
+                      " " +
+                      DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)] +
+                      "/year"
+                    : "Insufficient data"}
+                </div>
+                <br />
+              </div>
               <br />
             </div>
           ) : null}
@@ -55,7 +60,7 @@ export function MileageOverviewCard(data: VehicleData | null) {
             ]}
             colors={[style.getPropertyValue("--color-7")]}
             height={200}
-            margin={{ top: 20, left: 30, right: 20 }}
+            margin={{ top: 20, left: 30, right: 0 }}
             grid={{ vertical: false, horizontal: true }}
             sx={{ "&&": { touchAction: "auto" } }}
           />

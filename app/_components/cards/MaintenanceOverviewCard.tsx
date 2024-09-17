@@ -53,7 +53,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
                 },
               ]}
               height={200}
-              margin={{ top: 20, left: 30, right: 20, bottom: 20 }}
+              margin={{ top: 20, left: 30, right: 0, bottom: 20 }}
               sx={{ "&&": { touchAction: "auto" } }}
             />
           )}

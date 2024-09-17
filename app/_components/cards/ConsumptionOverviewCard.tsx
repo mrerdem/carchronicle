@@ -39,16 +39,31 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
             {data.avg_consumption > 0 && data.avg_mileage > 0 ? (
               <>
                 <div className="card-text">
-                  {userPrefs.distance === DISTANCE_UNITS[0] && userPrefs.volume === VOLUME_UNITS[0]
-                    ? "Average: " + ((data.avg_consumption / data.avg_mileage) * 100).toFixed(2) + " L/100 km"
-                    : userPrefs.distance === DISTANCE_UNITS[1] && userPrefs.volume === VOLUME_UNITS[1]
-                    ? "Average: " + (data.avg_mileage / data.avg_consumption).toFixed(2) + " MPG"
-                    : "Average: " +
-                      (data.avg_consumption / data.avg_mileage).toFixed(2) +
-                      " " +
-                      VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs.volume)] +
-                      "/" +
-                      DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)]}
+                  {userPrefs.distance === DISTANCE_UNITS[0] && userPrefs.volume === VOLUME_UNITS[0] ? (
+                    <div style={{ display: "flex" }}>
+                      <div>Average:</div>
+                      <div className="card-dotfill"></div>
+                      <div>{((data.avg_consumption / data.avg_mileage) * 100).toFixed(2) + " L/100 km"}</div>
+                    </div>
+                  ) : userPrefs.distance === DISTANCE_UNITS[1] && userPrefs.volume === VOLUME_UNITS[1] ? (
+                    <div style={{ display: "flex" }}>
+                      <div>Average:</div>
+                      <div className="card-dotfill"></div>
+                      <div>{(data.avg_mileage / data.avg_consumption).toFixed(2) + " MPG"}</div>
+                    </div>
+                  ) : (
+                    <div style={{ display: "flex" }}>
+                      <div>Average:</div>
+                      <div className="card-dotfill"></div>
+                      <div>
+                        {(data.avg_consumption / data.avg_mileage).toFixed(2) +
+                          " " +
+                          VOLUME_UNIT_SYMBOLS[VOLUME_UNITS.findIndex((item) => item === userPrefs.volume)] +
+                          "/" +
+                          DISTANCE_UNIT_SYMBOLS[DISTANCE_UNITS.findIndex((item) => item === userPrefs.distance)]}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </>
             ) : (
@@ -70,7 +85,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
               ]}
               colors={[style.getPropertyValue("--color-7")]}
               height={200}
-              margin={{ top: 20, left: 30, right: 20 }}
+              margin={{ top: 20, left: 30, right: 0 }}
               grid={{ vertical: false, horizontal: true }}
               sx={{ "&&": { touchAction: "auto" } }}
             />
@@ -98,7 +113,7 @@ export function ConsumptionOverviewCard(data: VehicleData | null) {
               ]}
               colors={[style.getPropertyValue("--color-7")]}
               height={200}
-              margin={{ top: 20, left: 30, right: 20 }}
+              margin={{ top: 20, left: 30, right: 0 }}
               grid={{ vertical: false, horizontal: true }}
               sx={{ "&&": { touchAction: "auto" } }}
             />

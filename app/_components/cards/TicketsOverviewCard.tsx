@@ -48,11 +48,16 @@ export function TicketsOverviewCard(data: VehicleData | null) {
           <div className="card-title">Tickets Overview</div>
           <br />
           <div className="card-text">
-            Total cost:{" "}
-            {Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: userPrefs.currency,
-            }).format(totalCost)}
+            <div style={{ display: "flex" }}>
+              <div>Total cost:</div>
+              <div className="card-dotfill"></div>
+              <div>
+                {Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: userPrefs.currency,
+                }).format(totalCost)}
+              </div>
+            </div>
           </div>
           {yearlyCosts && (
             <>
@@ -78,7 +83,7 @@ export function TicketsOverviewCard(data: VehicleData | null) {
                 series={[{ data: yearlyCosts.map((obj: TicketCost) => obj.cost / plotCoef) }]}
                 colors={[style.getPropertyValue("--color-7")]}
                 height={200}
-                margin={{ top: 20, left: 30, right: 20 }}
+                margin={{ top: 20, left: 30, right: 0 }}
                 grid={{ vertical: false, horizontal: true }}
                 sx={{ "&&": { touchAction: "auto" } }}
               />
@@ -91,7 +96,7 @@ export function TicketsOverviewCard(data: VehicleData | null) {
         <div className="card overview-card tickets-overview-card" style={{ gridRowEnd: "span 5" }}>
           <div className="card-title">Tickets Overview</div>
           <p></p>
-          <div className="card-text">Add a ticket to get an overview.</div>
+          <div className="card-text">No tickets.</div>
         </div>
       );
     }

@@ -34,9 +34,15 @@ export function AccidentsOverviewCard(data: VehicleData | null) {
         >
           <div className="card-title">Accidents Overview</div>
           <br />
-          <div className="card-text">Total: {totalCount}</div>
+          <div className="card-text">
+            <div style={{ display: "flex" }}>
+              <div>Total:</div>
+              <div className="card-dotfill"></div>
+              <div>{totalCount}</div>
+            </div>
+          </div>
           <br />
-          <div className="card-text">Yearly accidents:</div>
+          <div className="card-text">Over the years:</div>
           <BarChart
             xAxis={[
               {
@@ -47,7 +53,7 @@ export function AccidentsOverviewCard(data: VehicleData | null) {
             colors={[style.getPropertyValue("--color-7")]}
             series={[{ data: yearlyCounts.map((obj) => obj.count) }]}
             height={200}
-            margin={{ top: 20, left: 30, right: 20 }}
+            margin={{ top: 20, left: 30, right: 0 }}
             grid={{ vertical: false, horizontal: true }}
             sx={{ "&&": { touchAction: "auto" } }}
           />
@@ -58,7 +64,7 @@ export function AccidentsOverviewCard(data: VehicleData | null) {
         <div className="card overview-card accidents-overview-card" style={{ gridRowEnd: "span 5" }}>
           <div className="card-title">Accidents Overview</div>
           <p></p>
-          <div className="card-text">Add accident info to get an overview.</div>
+          <div className="card-text">No accidents.</div>
         </div>
       );
     }

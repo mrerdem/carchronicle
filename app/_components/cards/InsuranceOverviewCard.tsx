@@ -34,11 +34,14 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
           <div className="card-title">Insurance Overview</div>
           <br />
           <div className="card-text">
-            Total cost:{" "}
-            {Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: userPrefs.currency,
-            }).format(totalCost)}
+            <div style={{ display: "flex" }}>
+              <div>Total cost: </div>
+              <div className="card-dotfill"></div>
+              {Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: userPrefs.currency,
+              }).format(totalCost)}
+            </div>
           </div>
           <br />
           <div className="card-text">
@@ -65,7 +68,7 @@ export function InsuranceOverviewCard(data: VehicleData | null) {
             ]}
             colors={[style.getPropertyValue("--color-7")]}
             height={200}
-            margin={{ top: 20, left: 30, right: 20 }}
+            margin={{ top: 20, left: 30, right: 0 }}
             grid={{ vertical: false, horizontal: true }}
             sx={{ "&&": { touchAction: "auto" } }}
           />
