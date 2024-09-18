@@ -53,7 +53,7 @@ export function AccidentsOverviewCard(data: VehicleData | null) {
             colors={[style.getPropertyValue("--color-7")]}
             series={[{ data: yearlyCounts.map((obj) => obj.count) }]}
             height={200}
-            margin={{ top: 20, left: 30, right: 0 }}
+            margin={{ top: 20, left: 30, right: 4, bottom: 39 }} // 4: x-label is eaten on mobile with 0, 39: bold stroke bug with 40
             grid={{ vertical: false, horizontal: true }}
             sx={{ "&&": { touchAction: "auto" } }}
           />

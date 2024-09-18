@@ -26,16 +26,22 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
           <div className="card-title">Maintenance/Repair Overview</div>
           <br />
           <div className="card-text">
-            Total service cost:{" "}
-            {Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: userPrefs.currency,
-            }).format(totalServiceCost)}
+            <div style={{ display: "flex" }}>
+              <div>Total service cost:</div>
+              <div className="card-dotfill"></div>
+              <div>
+                {Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: userPrefs.currency,
+                }).format(totalServiceCost)}
+              </div>
+            </div>
           </div>
           {totalServiceCost > 0 && (
             <PieChart
               series={[
                 {
+                  arcLabel: (item) => `${item.value > 0 ? item.value : ""}`,
                   data: [
                     {
                       id: 0,
@@ -53,8 +59,9 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
                 },
               ]}
               height={200}
-              margin={{ top: 20, left: 30, right: 0, bottom: 20 }}
+              margin={{ top: 20, left: 0, right: 0, bottom: 20 }}
               sx={{ "&&": { touchAction: "auto" } }}
+              tooltip={{ trigger: "none" }}
             />
           )}
         </div>
