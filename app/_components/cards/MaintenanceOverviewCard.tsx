@@ -27,7 +27,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
           <br />
           <div className="card-text">
             <div style={{ display: "flex" }}>
-              <div>Total service cost:</div>
+              <div>Total cost:</div>
               <div className="card-dotfill"></div>
               <div>
                 {Intl.NumberFormat("en-US", {
@@ -41,7 +41,7 @@ export function MaintenanceOverviewCard(data: VehicleData | null) {
             <PieChart
               series={[
                 {
-                  arcLabel: (item) => `${item.value > 0 ? item.value : ""}`,
+                  arcLabel: (item) => `${item.value > 0 ? item.value.toFixed(2) : ""}`,
                   data: [
                     {
                       id: 0,
