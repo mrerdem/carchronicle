@@ -1,13 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  UserAccountButton,
-  UserLoginButton,
-  UserRegisterButton,
-  UserLogoutButton,
-} from "@/app/_components/UserButtons";
-import { UserLoginForm, UserRegisterForm } from "@/app/_components/UserForms";
+import { UserAccountButton, UserLoginButton, UserLogoutButton } from "@/app/_components/UserButtons";
 import { useRouter, usePathname } from "next/navigation";
 import { resetSessionData, selectSessionData, setSessionData } from "@/app/_redux/features/session/sessionDataSlice";
 import { useAppDispatch, useAppSelector } from "@/app/_redux/hooks";
@@ -41,8 +35,6 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
   const [state, setState] = useState({
     mobileLayout: false,
     userMenuStatus: false, // User menu is visible or not
-    loginFormStatus: false, // Login form is visible or not
-    registerFormStatus: false, // Register form is visible or not
     userLoginStatus: false, // User logged-in or not
   });
 
@@ -50,27 +42,11 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
     setState((prevState) => ({
       ...prevState,
       userMenuStatus: !prevState.userMenuStatus,
-      loginFormStatus: false,
-      registerFormStatus: false,
     }));
   };
 
   const handleLoginButtonAction = () => {
-    // Make form visible for user information
-    setState((prevState) => ({
-      ...prevState,
-      loginFormStatus: true,
-      userMenuStatus: true,
-    }));
-  };
-
-  const handleRegisterButtonAction = () => {
-    // Make form visible for user information
-    setState((prevState) => ({
-      ...prevState,
-      registerFormStatus: true,
-      userMenuStatus: true,
-    }));
+    dispatch(setUiData({ ...uiData, loginFormVisibility: true }));
   };
 
   const handleLogoutButtonAction = async () => {
@@ -86,15 +62,6 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
       }));
       router.push("/");
     }
-  };
-
-  const handleCancelButtonAction = () => {
-    setState((prevState) => ({
-      ...prevState,
-      loginFormStatus: false,
-      registerFormStatus: false,
-      userMenuStatus: true,
-    }));
   };
 
   const handleResize = () => {
@@ -151,8 +118,6 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
     if (sessionData.id) {
       setState((prevState) => ({
         ...prevState,
-        loginFormStatus: false,
-        registerFormStatus: false,
         userLoginStatus: true,
       }));
       // Redirect to dashboard if URL is manually changed to homepage
@@ -213,36 +178,12 @@ export function Header({ navBarState, setNavBarState }: HeaderProps) {
         />
       </div>
 
-      <UserLoginForm render={state.loginFormStatus && state.userMenuStatus} cancelAction={handleCancelButtonAction} />
-
-      <UserRegisterForm
-        render={state.registerFormStatus && state.userMenuStatus}
-        cancelAction={handleCancelButtonAction}
-      />
-
       <UserLoginButton
         render={
-          (!state.mobileLayout && !state.userLoginStatus && !state.registerFormStatus && !state.loginFormStatus) ||
-          (state.mobileLayout &&
-            !state.userLoginStatus &&
-            state.userMenuStatus &&
-            !state.registerFormStatus &&
-            !state.loginFormStatus)
+          (!state.mobileLayout && !state.userLoginStatus) ||
+          (state.mobileLayout && !state.userLoginStatus && state.userMenuStatus)
         }
         clickAction={handleLoginButtonAction}
-        menuStatus={state.userMenuStatus}
-      />
-
-      <UserRegisterButton
-        render={
-          (!state.mobileLayout && !state.userLoginStatus && !state.loginFormStatus && !state.registerFormStatus) ||
-          (state.mobileLayout &&
-            !state.userLoginStatus &&
-            state.userMenuStatus &&
-            !state.loginFormStatus &&
-            !state.registerFormStatus)
-        }
-        clickAction={handleRegisterButtonAction}
         menuStatus={state.userMenuStatus}
       />
 

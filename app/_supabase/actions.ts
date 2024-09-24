@@ -1,5 +1,12 @@
 import { createClient } from "@/app/_supabase/client";
 
+export interface GoogleSigninReponse {
+  clientId: string;
+  client_id: string;
+  credential: string;
+  select_by: string;
+}
+
 export async function login(formData: FormData) {
   const supabase = createClient();
 
@@ -11,6 +18,17 @@ export async function login(formData: FormData) {
   const response = await supabase.auth.signInWithPassword(data);
 
   return response;
+}
+
+export async function signinWithGoogle(response: GoogleSigninReponse) {
+  const supabase = createClient();
+
+  const resp = await supabase.auth.signInWithIdToken({
+    provider: "google",
+    token: response.credential,
+  });
+
+  return resp;
 }
 
 export async function signup(formData: FormData) {

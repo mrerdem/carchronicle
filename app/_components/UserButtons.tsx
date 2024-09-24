@@ -21,7 +21,7 @@ export function UserLoginButton({ render, clickAction }: UserButtonProps) {
   return (
     render && (
       <button className="button header-button" id="user-login-button" onClick={clickAction}>
-        Login
+        Sign in
       </button>
     )
   );

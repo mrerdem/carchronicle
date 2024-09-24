@@ -151,16 +151,8 @@ body {
   text-shadow: var(--color-5);
 }
 
-.register-form {
-  display: flex;
-}
-
 #user-login-button {
   background-color: var(--color-3);
-}
-
-#user-cancel-button {
-  background-color: var(--color-4);
 }
 
 #user-logout-button,
@@ -341,6 +333,11 @@ body {
   margin: 4px;
 }
 
+.login-button-container {
+  padding: var(--border-radius);
+  padding-bottom: 0;
+}
+
 .form-title-container {
   display: flex;
   justify-content: space-between;
@@ -360,14 +357,16 @@ body {
   border-radius: var(--border-radius);
 }
 
+.form-button-container .right-most-button {
+  margin-right: var(--border-radius);
+}
+
 .form-button-container .add-button {
   background-color: var(--color-3);
-  margin-right: var(--border-radius);
 }
 
 .form-button-container .update-button {
   background-color: var(--color-3);
-  margin-right: var(--border-radius);
 }
 
 .form-button-container .close-button {

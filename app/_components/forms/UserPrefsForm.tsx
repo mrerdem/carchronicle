@@ -179,7 +179,7 @@ export default function UserPrefsForm(props: DataEntryDialogProps) {
               </button>
             ) : null}
             {
-              <button className="button add-button" onClick={handleAdd}>
+              <button className="button add-button right-most-button" onClick={handleAdd}>
                 Set
               </button>
             }

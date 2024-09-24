@@ -1,4 +1,4 @@
-export const VEHICLE_TYPES = ["car", "SUV", "motorcycle", "truck", "EV", "van", "ATV"];
+export const VEHICLE_TYPES = ["car", "SUV", "motorcycle", "truck", "van", "ATV"];
 
 // Fields printed on overview cards
 export const VEHICLE_INFO_PRINTED = [

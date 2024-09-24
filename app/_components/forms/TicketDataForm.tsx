@@ -175,12 +175,12 @@ export default function TicketDataForm(props: DataEntryDialogProps) {
               Cancel
             </button>
             {!existingFormData && (
-              <button className="button add-button" onClick={handleAdd}>
+              <button className="button add-button right-most-button" onClick={handleAdd}>
                 Add
               </button>
             )}
             {existingFormData && (
-              <button className="button update-button" onClick={handleUpdate}>
+              <button className="button update-button right-most-button" onClick={handleUpdate}>
                 Update
               </button>
             )}
